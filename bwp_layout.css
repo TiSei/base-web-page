@@ -20,6 +20,19 @@ h1, h2, h3, h4 {
 	flex-wrap: wrap;
 }
 
+table, th, td {
+	border: 1px solid;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+ul {
+	margin-block-end: 5px;
+	margin-block-start: 5px;
+}
+
 @media (prefers-color-scheme: dark) {
 	body {
 		background-color: #333333;

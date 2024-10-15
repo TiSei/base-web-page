@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>bwp-diagram</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="BWP - example page for diagrams">
+    <meta name="author" content="TiSei">
+    <meta name="keywords" content="BWP, diagram, WebDesign">
+    <link rel="stylesheet" href="bwp_layout.css">
+    <link rel="stylesheet" href="bwp_menu.css">
+    <link rel="stylesheet" href="bwp_diagram.css">
+    <style>
+      .bwp-container h3 {
+        margin-bottom: 5px;
+      }
+      td {
+        padding: 5px;
+        text-align: left;
+      }
+      .diagram-list {
+        flex-direction: column;
+      }
+      .bwp-chart {
+        width: 160px;
+        height: 160px;
+      }
+      .bwp-legend-chart {
+        width: 320px;
+      }
+    </style>
+  </head>
+  <script src="bwp_general.js"></script>
+  <script src="bwp_menu.js" defer></script>
+  <script src="bwp_diagram.js" defer></script>
+  <body>
+    <div class="bwp-onepage-layout-container">
+      <div id="title" class="bwp-container">
+        <h2>Example - Diagrams<h2>
+      </div>
+      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{&quot;menu&quot;:{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;}}"></div>
+      <div id="json_values" class="bwp-container">
+        <h3>Chart-Attributes</h3>
+        <table>
+          <tr><th>tag</th><th>description</th></tr>
+          <tr><td>bwp-chart-type</td><td>select charttype, in time supported:<ul><li>piechart</li></ul></td></tr>
+          <tr><td>bwp-chart-data</td><td>json-coded chart data, that will shown.<br/>The format is defined by the used charttype</td></tr>
+          <tr><td>bwp-chart-showtext</td><td>REMOVED<br/>allows to diable chart description except legend<br/>use class "bwp-chart-no-text" instead</td></tr>
+          <tr><td>bwp-chart-nohover</td><td>REMOVED<br/>allows to diable chart hover effects includes legend<br/>use class "bwp-chart-no-hover" instead</td></tr>
+        </table>
+      </div>
+      <div id="piecharts" class="bwp-container">
+        <h3>Piecharts</h3>
+        <svg class="bwp-chart-no-text bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg class="bwp-chart-no-text bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
+        <svg class="bwp-chart-no-text" bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg class="bwp-chart-no-text" bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
+        <svg class="bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg class="bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
+        <svg bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
+      </div>
+    </div>
+  </body>
+</html>

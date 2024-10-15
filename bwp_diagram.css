@@ -1,0 +1,55 @@
+/* Diagram-Colors */
+.bwp-dc1 { fill: #7cfc00; }
+.bwp-dc2 { fill: #ffd700; }
+.bwp-dc3 { fill: #ff6347; }
+.bwp-dc4 { fill: #20b2aa; }
+.bwp-dc5 { fill: #87cefa; }
+.bwp-chart { background-color: #EEEEEE; }
+/* PieChart */
+.bwp-piechart-legend-text {
+	font-size: 18px;
+}
+
+.bwp-piechart:not(.bwp-chart-no-hover) .bwp-piechart-piece:hover .bwp-piechart-piece-text,
+.bwp-chart-no-hover:not(.bwp-chart-no-text) .bwp-piechart-piece-text
+{
+	opacity: 1;
+}
+
+.bwp-piechart:not(.bwp-chart-no-hover) .bwp-piechart-piece:hover {
+	filter: brightness(110%);
+}
+
+.bwp-piechart:not(.bwp-chart-no-hover) .bwp-piechart-piece:hover .bwp-piechart-legend-text {
+	font-weight: 900;
+}
+
+.bwp-piechart-piece {
+	filter: brightness(90%);
+}
+
+.bwp-piechart-piece-path {
+	stroke: rgb(0 0 0 / 0.5);
+}
+
+.bwp-piechart-piece-text {
+	opacity: 0;
+	transition: opacity .4s ease-in-out;
+	pointer-events: none;
+	text-anchor: middle;
+	dominant-baseline: middle;
+}
+
+.bwp-chart-no-text .bwp-piechart-piece-text {
+	display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	.bwp-dc1 { fill: #64b514; }
+	.bwp-dc2 { fill: #b89e14; }
+	.bwp-dc3 { fill: #e63d1f; }
+	.bwp-dc4 { fill: #25837e; }
+	.bwp-dc5 { fill: #50abe4; }
+	.bwp-chart { background-color: #333333; }
+	.bwp-piechart-piece-text { fill: #FFFFFF; }
+}
