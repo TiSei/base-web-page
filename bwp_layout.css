@@ -1,0 +1,36 @@
+body {
+	background-color: #CCCCCC;
+	color: #000000;
+	font-family: Tahoma;
+}
+
+h1, h2, h3, h4 {
+	margin: 0px;
+}
+
+.bwp-container {
+	background: #FFFFFF;
+	margin: 5px;
+	padding: 10px;
+}
+
+.bwp-flex-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #333333;
+		color: #e2e2e2;
+	}
+
+	.bwp-container {
+		background: #000000;
+	}
+
+	img {
+		filter: brightness(80%);
+	}
+}
