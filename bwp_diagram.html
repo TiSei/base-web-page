@@ -20,11 +20,11 @@
         flex-direction: column;
       }
       .bwp-chart {
-        width: 160px;
-        height: 160px;
+        width: 16%;
+        height: 28%;
       }
-      .bwp-legend-chart {
-        width: 320px;
+      .bwp-chart[bwp-chart-legend] {
+        width: 33%;
       }
     </style>
   </head>
@@ -36,28 +36,49 @@
       <div id="title" class="bwp-container">
         <h2>Example - Diagrams<h2>
       </div>
-      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{&quot;menu&quot;:{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;}}"></div>
+      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{&quot;menu&quot;:{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;,&quot;Columncharts&quot;:&quot;#columncharts&quot;}}"></div>
       <div id="json_values" class="bwp-container">
         <h3>Chart-Attributes</h3>
         <table>
           <tr><th>tag</th><th>description</th></tr>
-          <tr><td>bwp-chart-type</td><td>select charttype, in time supported:<ul><li>piechart</li></ul></td></tr>
+          <tr><td>bwp-chart-type</td><td>select charttype, in time supported:<ul><li>piechart</li><li>columnchart</li></ul></td></tr>
           <tr><td>bwp-chart-data</td><td>json-coded chart data, that will shown.<br/>The format is defined by the used charttype</td></tr>
-          <tr><td>bwp-chart-showtext</td><td>REMOVED<br/>allows to diable chart description except legend<br/>use class "bwp-chart-no-text" instead</td></tr>
-          <tr><td>bwp-chart-nohover</td><td>REMOVED<br/>allows to diable chart hover effects includes legend<br/>use class "bwp-chart-no-hover" instead</td></tr>
+          <tr><td>bwp-chart-no-text</td><td>allows to disable chart description except legend<br/>default, if not set: false</td></tr>
+          <tr><td>bwp-chart-no-hover</td><td>allows to disable chart hover effects includes legend<br/>default, if not set: false</td></tr>
+          <tr><td>bwp-chart-baseline</td><td>allows to set baseline value in scaled charts<br/>default, if not set: 0</td></tr>
         </table>
       </div>
       <div id="piecharts" class="bwp-container">
         <h3>Piecharts</h3>
-        <svg class="bwp-chart-no-text bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
-        <svg class="bwp-chart-no-text bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
-        <svg class="bwp-chart-no-text" bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
-        <svg class="bwp-chart-no-text" bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
-        <svg class="bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
-        <svg class="bwp-chart-no-hover" bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
+        <svg bwp-chart-no-text bwp-chart-no-hover bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg bwp-chart-no-text bwp-chart-no-hover bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend />
+        <svg bwp-chart-no-text bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg bwp-chart-no-text bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend />
+        <svg bwp-chart-no-hover bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg bwp-chart-no-hover bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend />
         <svg bwp-chart-type="piechart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
-        <svg bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend="[&quot;A-Block&quot;,&quot;B-Block&quot;,&quot;C-Block&quot;,&quot;D-Block&quot;,&quot;E-Block&quot;]"/>
+        <svg bwp-chart-type="piechart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend />
+      </div>
+      <div id="columncharts" class="bwp-container">
+        <h3>Columncharts</h3>
+        <svg bwp-chart-no-text bwp-chart-no-hover bwp-chart-type="columnchart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg bwp-chart-no-text bwp-chart-no-hover bwp-chart-type="columnchart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend />
+        <svg bwp-chart-no-text bwp-chart-type="columnchart" bwp-chart-data="[10,40.5,15.7,28,5.8]"/>
+        <svg bwp-chart-no-text bwp-chart-type="columnchart" bwp-chart-data="[8.2,20.9,21,40.9,9]" bwp-chart-legend />
+        <svg bwp-chart-no-hover bwp-chart-type="columnchart" bwp-chart-data="[25.6,40.5,15.7,28,36.2]" bwp-chart-baseline="10" />
+        <svg bwp-chart-no-hover bwp-chart-type="columnchart" bwp-chart-data="[15,20.9,21,17.9,12]" bwp-chart-legend bwp-chart-baseline="10" />
+        <svg bwp-chart-type="columnchart" bwp-chart-data="[25.6,40.5,15.7,28,36.2]" bwp-chart-baseline="10" />
+        <svg bwp-chart-type="columnchart" bwp-chart-data="[15,20.9,21,17.9,12]" bwp-chart-legend bwp-chart-baseline="10" />
       </div>
     </div>
+    <script>
+      function insertLegend() {
+        let chart_list = document.querySelectorAll('svg[bwp-chart-legend]');
+        for (let chart of chart_list) {
+          chart.setAttribute('bwp-chart-legend','["A-Block","B-Block","C-Block","D-Block","E-Block"]');
+        }
+      }
+      insertLegend();
+    </script>
   </body>
 </html>
