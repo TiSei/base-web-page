@@ -9,13 +9,13 @@ function runMenuApi() {
 
 runMenuApi();
 
-function M_updateMenu(menu, columnlist, recall=false) {
-	if (columnlist['menu'] === undefined && columnlist['url'] === undefined)
-		console.error("No data set (menu, url): Cannot load data for menu: "+menu);
-	if (columnlist['url'] !== undefined && recall)
-		console.error("Reverse url request: Cannot load data for menu: "+menu);
-	if (columnlist['url']!== undefined) {
-		fetch(columnlist['url']).then(function(response) {
+function M_updateMenu(menu, dict) {
+	if (dict.constructor == Object) {
+		for (let key of Object.keys(dict)) {
+			menu.appendChild(dict[key].constructor == Object ? M_newDropdownMenuItem(key, dict[key]) : M_newMenuItem(key, dict[key]));
+		}
+	} else {
+		fetch(dict).then(function(response) {
 			return response.json();
 		}).then(function(data) {
 			M_updateMenu(menu, data, true);
@@ -23,10 +23,6 @@ function M_updateMenu(menu, columnlist, recall=false) {
 			console.log('url request error', err);
 		});
 		return;
-	}
-	let items = columnlist['menu'];
-	for (let key of Object.keys(items)) {
-		menu.appendChild(items[key].constructor == Object ? M_newDropdownMenuItem(key, items[key]) : M_newMenuItem(key, items[key]));
 	}
 }
 
