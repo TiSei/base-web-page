@@ -112,4 +112,13 @@ ul {
 	.bwp-top-jumper {
 		background-color: #333;
 	}
+
+	.bwp-search-bar {
+		background-color: #666;
+		color: #FFF;
+	}
+
+	::placeholder {
+		color: #FFF;
+	}
 }

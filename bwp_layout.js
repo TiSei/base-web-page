@@ -25,3 +25,16 @@ function L_jumpToTop() {
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
+
+function L_addSearchBar() {
+	let inputs = document.getElementsByClassName('bwp-search-bar');
+	for (let input of inputs) {
+		input.placeholder = 'Suche';
+		input.addEventListener('keydown', function(event) {
+			if (event.key === "Enter" || event.keyCode == '39') {
+				event.preventDefault();
+				window.find(event.target.value);
+			}
+		});
+	}
+}
