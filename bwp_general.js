@@ -17,3 +17,7 @@ function createElement(type,classes,attributes,innerHTML) {
 	elem.innerHTML = innerHTML;
 	return elem;
 }
+
+function displayConfirmAlert(msg) {
+	return confirm(msg);
+}

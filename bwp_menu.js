@@ -1,9 +1,11 @@
 function runMenuApi() {
 	let menu_list = document.getElementsByClassName('bwp-navbar');
 	for (let menu of menu_list) {
-		if (!menu.hasAttribute('bwp-menu-data'))
+		if (!menu.hasAttribute('bwp-menu-data')) {
 			console.error('Invalid menu input, "bwp-menu-data" is not defined');
-		M_updateMenu(menu, JSON.parse(menu.getAttribute("bwp-menu-data")));
+		} else {
+			M_updateMenu(menu, JSON.parse(menu.getAttribute("bwp-menu-data")));
+		}
 	}
 }
 

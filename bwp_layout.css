@@ -43,7 +43,7 @@ ul {
   gap: 10px;
 }
 
-#bwp-header {
+#bwp-headline {
 	grid-area: header;
 	display: flex;
 	justify-content: space-between;
@@ -56,6 +56,20 @@ ul {
 
 #bwp-content {
 	grid-area: content;
+}
+
+/* header & footer */
+.bwp-header, .bwp-footer {
+	position: sticky;
+	left: 0;
+}
+
+.bwp-header {
+	top: 0;
+}
+
+.bwp-footer {
+	bottom: 0;
 }
 
 @media (prefers-color-scheme: dark) {
