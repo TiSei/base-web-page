@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>bwp-sideshow</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="BWP - example page for sideshow">
+    <meta name="author" content="TiSei">
+    <meta name="keywords" content="BWP, layouts, WebDesign, onepage, sideshow">
+    <link rel="stylesheet" href="bwp_layout.css">
+    <link rel="stylesheet" href="bwp_menu.css">
+    <link rel="stylesheet" href="bwp_sideshow.css">
+    <style>
+      .bwp-sideshow-container { width: calc(100% - 30px); height: 700px; margin: 15px; }
+    </style>
+  </head>
+  <script src="bwp_general.js"></script>
+  <script src="bwp_menu.js" defer></script>
+  <script src="bwp_sideshow.js" defer></script>
+  <body>
+    <div class="bwp-onepage-layout-container">
+      <div id="title" class="bwp-container">
+        <h2>Beispiel - SideShow</h2>
+      </div>
+      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{}"></div>
+      <div class="bwp-container">
+        <h3>SideShow with IFrame</h3>
+        <div class="bwp-sideshow-container" bwp-sideshow-data="{}" bwp-sideshow-data-source="http://localhost/BWP/show1.json" bwp-sideshow-type="iframe"></div>
+      </div>
+      <!--
+      <div class="bwp-container">
+        <h3>SideShow with Img</h3>
+        <div class="bwp-sideshow-container" bwp-sideshow-data="{}" bwp-sideshow-data-source="http://localhost/BWP/show1.json" bwp-sideshow-type="img" bwp-sideshow-recall bwp-sideshow-noMenu></div>
+      </div>
+      -->
+    </div>
+  </body>
+</html>

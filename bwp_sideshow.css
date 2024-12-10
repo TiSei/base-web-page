@@ -1,0 +1,77 @@
+.bwp-fade-in {
+	opacity: 1 !important;
+}
+
+.bwp-fade-out {
+	opacity: 0 !important;
+}
+
+.bwp-sideshow {
+	transition: opacity 2s;
+	opacity: 0;
+}
+
+.bwp-sideshow-container:hover > .bwp-sideshow-menu {
+	opacity: 1;
+	pointer-events: auto;
+	animation: bwp-sideshow-menu-fadeout 2s forwards;
+}
+
+.bwp-sideshow-menu:hover {
+	opacity: 1;
+	animation: none !important;
+}
+
+.bwp-sideshow-container {
+	position: relative;
+	display: inline-block;
+}
+
+.bwp-sideshow-menu {
+	padding:10px;
+	background-color:#000000;
+	color:#FFFFFF;
+	font-size: 16pt;
+	border:3px dotted #999999;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.bwp-sideshow-menu a {
+	line-height: 1.5;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+.bwp-sideshow-menu a:hover {
+	color: #BBBBBB;
+}
+
+.bwp-sideshow-menu ol {
+	margin: 5px 0px;
+}
+
+.bwp-sideshow-menu-btn {
+	width:40px;
+	height: 40px;
+	color: #000000;
+	float: left;
+	font-size: 16pt;
+}
+
+.bwp-sideshow {
+	width: 100%;
+	height: 100%;
+}
+
+@keyframes bwp-sideshow-menu-fadeout {
+	0%, 99% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
