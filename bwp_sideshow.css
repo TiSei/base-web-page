@@ -28,14 +28,14 @@
 }
 
 .bwp-sideshow-menu {
-	padding:10px;
-	background-color:#000000;
-	color:#FFFFFF;
+	padding: 10px;
+	background-color: var(--default-background-color-light);
+	color: var(--default-color-light);
 	font-size: 16pt;
-	border:3px dotted #999999;
+	border: 3px dotted #999;
 	position: absolute;
-	top: 10px;
-	left: 10px;
+	top: 20px;
+	left: 20px;
 	opacity: 0;
 	pointer-events: none;
 }
@@ -43,21 +43,20 @@
 .bwp-sideshow-menu a {
 	line-height: 1.5;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: var(--default-color-light);
 }
 
 .bwp-sideshow-menu a:hover {
-	color: #BBBBBB;
+	color: #FFF;
 }
 
 .bwp-sideshow-menu ol {
 	margin: 5px 0px;
 }
 
-.bwp-sideshow-menu-btn {
+.bwp-sideshow-menu .bwp-btn {
 	width:40px;
 	height: 40px;
-	color: #000000;
 	float: left;
 	font-size: 16pt;
 }
@@ -68,10 +67,24 @@
 }
 
 @keyframes bwp-sideshow-menu-fadeout {
-	0%, 99% {
+	0%, 75% {
 		opacity: 1;
 	}
 	100% {
 		opacity: 0;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.bwp-sideshow-menu, .bwp-sideshow-menu a {
+		color: var(--default-color-black);
+	}
+
+	.bwp-sideshow-menu a:hover {
+		color: #AAA;
+	}
+
+	.bwp-sideshow-menu {
+		background-color: var(--default-background-color-dark);
 	}
 }

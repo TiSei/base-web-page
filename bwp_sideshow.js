@@ -23,7 +23,6 @@ function runSideShowApi() {
 runSideShowApi();
 
 function SS_Navigate(index, idx) {
-	console.log(index, idx);
 	let frame = document.querySelector('.bwp-sideshow-container[bwp-sideshow-index="'+index+'"] > .bwp-sideshow');
 	let box = frame.parentElement;
 	clearTimeout(show_timer[index]);
@@ -81,27 +80,28 @@ function SS_initMenu(box) {
 		}
 		div.innerHTML += html + '</ol>';
 	}
-	let btn = createElement('button',['bwp-sideshow-menu-btn'],{},'&#10073;&#10073;');
+	let btn = createElement('button',['bwp-btn'],{},'&#10073;&#10073;');
 	btn.addEventListener('click', function(e) { let idx = e.target.parentElement.parentElement.getAttribute('bwp-sideshow-index'); SS_Navigate(idx,slide_idx[idx]); });
 	div.appendChild(btn);
-	btn = createElement('button',['bwp-sideshow-menu-btn','bwp-none'],{},'&#9658;');
+	btn = createElement('button',['bwp-btn','bwp-none'],{},'&#9658;');
 	btn.addEventListener('click', function(e) { let box = e.target.parentElement.parentElement; SS_Navigate(box.getAttribute('bwp-sideshow-index')); SS_toggleMenu(box, 'play'); });
 	div.appendChild(btn);
-	div.appendChild(createElement('button',['bwp-sideshow-menu-btn'],{'onClick':'javascript:location.reload()'},'&#8634;'));
+	div.appendChild(createElement('button',['bwp-btn'],{'onClick':'javascript:location.reload()'},'&#8634;'));
 	box.appendChild(div);
 }
 
 function SS_toggleMenu(box, mode) {
 	if (box.hasAttribute('bwp-sideshow-noMenu'))
 		return;
+	let btn = box.querySelectorAll('.bwp-sideshow-menu .bwp-btn');
 	switch (mode) {
 		case 'stop':
-			box.querySelector('.bwp-sideshow-menu .bwp-sideshow-menu-btn:nth-child(3)').classList.add('bwp-none');
-			box.querySelector('.bwp-sideshow-menu .bwp-sideshow-menu-btn:nth-child(4)').classList.remove('bwp-none');
+			btn[0].classList.add('bwp-none');
+			btn[1].classList.remove('bwp-none');
 			break;
 		case 'play':
-			box.querySelector('.bwp-sideshow-menu .bwp-sideshow-menu-btn:nth-child(3)').classList.remove('bwp-none');
-			box.querySelector('.bwp-sideshow-menu .bwp-sideshow-menu-btn:nth-child(4)').classList.add('bwp-none');
+			btn[0].classList.remove('bwp-none');
+			btn[1].classList.add('bwp-none');
 			break;
 	}
 }
