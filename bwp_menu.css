@@ -3,13 +3,13 @@
 }
 
 .bwp-navbar a, .bwp-dropdown-context a, .bwp-dropbtn {
-	background-color: #DDD;
+	background-color: var(--action-background-color-light);
 }
 
 .bwp-navbar a, .bwp-dropdown-context a {
 	text-decoration: none;
 	font-size: 16px;
-	color: black;
+	color: var(--default-color-light);
 }
 
 .bwp-navbar a {
@@ -51,7 +51,7 @@
 }
 
 .bwp-dropdown-content a:hover {
-	background-color: #999;
+	background-color: var(--action-background-color-hover-light);
 }
 
 .bwp-dropdown:hover .bwp-dropdown-content {
@@ -60,18 +60,15 @@
 
 @media (prefers-color-scheme: dark) {
 	.bwp-navbar a, .bwp-dropdown-context a, .bwp-dropbtn {
-		background-color: #333;
-	}
-
-	.bwp-navbar a, .bwp-dropdown-context a, .bwp-dropbtn {
-		color: white;
+		background-color: var(--action-background-color-dark);
+		color: var(--default-color-dark);
 	}
 
 	.bwp-navbar a:hover, .bwp-dropdown:hover .bwp-dropbtn {
-		background-color: red;
+		background-color: #F00;
 	}
 
 	.bwp-dropdown-content a:hover {
-		background-color: #666;
+		background-color: var(--action-background-color-hover-dark);
 	}
 }

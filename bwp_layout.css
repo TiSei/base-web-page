@@ -1,6 +1,15 @@
+:root {
+	--action-background-color-light: #DDD;
+	--action-background-color-dark: #333;
+	--action-background-color-hover-light: #AAA;
+	--action-background-color-hover-dark: #666;
+	--default-color-light: #000;
+	--default-color-dark: #FFF;
+}
+
 body {
 	background-color: #CCCCCC;
-	color: #000000;
+	color: var(--default-color-light);
 	font-family: Tahoma;
 }
 
@@ -89,7 +98,7 @@ ul {
 }
 
 .bwp-top-jumper {
-	background-color: #DDD;
+	background-color: var(--action-background-color-light);
 	position: fixed;
 	bottom: 20px;
 	right: 30px;
@@ -102,8 +111,28 @@ ul {
 	padding: 15px;
 }
 
-.bwp-top-jumper:hover {
-	background-color: #999;
+.bwp-top-jumper:hover, .bwp-btn:hover {
+	background-color: var(--action-background-color-hover-light);
+}
+
+/* Buttons */
+.bwp-btn {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	font-size: 14px;
+	font-family: inherit;
+	font-weight: normal;
+	line-height: 1;
+	color: var(--default-color-light);
+	background-color: var(--action-background-color-light);
+	border: 2px solid #444;
+	border-radius: 5px;
+	cursor: pointer;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 5px 5px;
+	vertical-align: middle;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -120,16 +149,16 @@ ul {
 		filter: brightness(80%);
 	}
 
-	.bwp-top-jumper {
-		background-color: #333;
+	.bwp-top-jumper, .bwp-btn, .bwp-search-bar {
+		background-color: var(--action-background-color-dark);
+		color: var(--default-color-dark);
 	}
 
-	.bwp-search-bar {
-		background-color: #666;
-		color: #FFF;
+	.bwp-top-jumper:hover, .bwp-btn:hover {
+		background-color: var(--action-background-color-hover-dark);
 	}
 
 	::placeholder {
-		color: #FFF;
+		color: var(--default-color-dark);
 	}
 }
