@@ -6,30 +6,50 @@ function runChartApi() {
 	let chart_list = document.querySelectorAll('svg[bwp-chart-type][bwp-chart-data]');
 	for (let chart of chart_list) {
 		let data = JSON.parse(chart.getAttribute('bwp-chart-data'));
-		switch (chart.getAttribute('bwp-chart-type')) {
-			case 'piechart':
-				if (data.length < 1 || data.length > 5)
-					console.error('Invalid Inline Data, attribute "bwp-chart-data" is to long (only support less than 6)');
-				PC_drawPieChart(chart,data,
-					Color_Palette.slice(0, data.length),
-					chart.hasAttribute('bwp-chart-legend') ? JSON.parse(chart.getAttribute('bwp-chart-legend')) : []);
-				break;
-			case 'columnchart':
-				if (data.length < 1 || data.length > 5)
-					console.error('Invalid Inline Data, attribute "bwp-chart-data" is to long (only support less than 6)');
-				CC_drawColumnChart(chart,data,
-					Color_Palette.slice(0, data.length),
-					chart.hasAttribute('bwp-chart-baseline') ? parseInt(chart.getAttribute('bwp-chart-baseline')) : NaN,
-					chart.hasAttribute('bwp-chart-legend') ? JSON.parse(chart.getAttribute('bwp-chart-legend')) : []);
-				break;
-			default:
-				console.error('Not supported chart type: '+chart.getAttribute('bwp-chart-type'));
-				break;
-		}
+		if (typeof data === 'string') {
+			fetch(data).then(function(response) {
+				return response.json();
+			}).then(function(data) {
+				C_processChart(chart, data);
+			}).catch(function(err) {
+				console.error('url request error', err);
+			});
+		} else
+			C_processChart(chart, data);
 	}
 }
 
 runChartApi();
+
+function C_processData(data) {
+	if (Array.isArray(data))
+		return [ data, [] ];
+	else if (typeof data === 'object' && data !== null)
+		return [ Object.values(data), Object.keys(data) ];
+	else
+		console.error('not supported data structure: '+json);
+}
+
+function C_processChart(chart, data) {
+	const [ values, legends ] = C_processData(data);
+	switch (chart.getAttribute('bwp-chart-type')) {
+		case 'piechart':
+			if (values.length < 1 || values.length > 5)
+				console.error('Invalid Data, to many values (only support less than 6)');
+			PC_drawPieChart(chart,values,Color_Palette.slice(0, values.length),chart.hasAttribute('bwp-chart-legend') ? legends : []);
+			break;
+		case 'columnchart':
+			if (values.length < 1 || values.length > 5)
+				console.error('Invalid Data, to many values (only support less than 6)');
+			CC_drawColumnChart(chart,values,Color_Palette.slice(0, values.length),
+				chart.hasAttribute('bwp-chart-baseline') ? parseInt(chart.getAttribute('bwp-chart-baseline')) : NaN,
+				chart.hasAttribute('bwp-chart-legend') ? legends : []);
+			break;
+		default:
+			console.error('Not supported chart type: '+chart.getAttribute('bwp-chart-type'));
+			break;
+	}
+}
 
 function C_getSVGText(x, y, innerText, classes) {
 	return createElement(["http://www.w3.org/2000/svg", "text"],classes,{'x':x,'y':y},innerText);
