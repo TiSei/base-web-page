@@ -19,7 +19,7 @@ function runChartApi() {
 					console.error('Invalid Inline Data, attribute "bwp-chart-data" is to long (only support less than 6)');
 				CC_drawColumnChart(chart,data,
 					Color_Palette.slice(0, data.length),
-					chart.hasAttribute('bwp-chart-baseline') ? parseInt(chart.getAttribute('bwp-chart-baseline')) : 0,
+					chart.hasAttribute('bwp-chart-baseline') ? parseInt(chart.getAttribute('bwp-chart-baseline')) : NaN,
 					chart.hasAttribute('bwp-chart-legend') ? JSON.parse(chart.getAttribute('bwp-chart-legend')) : []);
 				break;
 			default:
@@ -39,6 +39,7 @@ function C_getSVGPath(d, transform, classes) {
 	return createElement(["http://www.w3.org/2000/svg", "path"],classes,{'d':d,'transform':transform},'');
 }
 
+// piechart
 function PC_drawPieChart(svg, pieces, colors, legends = []) {
 	if ((colors.length != pieces.length))
 		console.error("Invalid inputs, pieces und colors has different lengths");
@@ -73,7 +74,10 @@ function PC_getPathOfPiece(piece, rotation, color) {
 	x = round(Radius * Math.sin(radian),3);
 	y = round(Radius * (1-Math.cos(radian)),3);
 	large_arc = piece*3.6 > 180 ? 1 : 0;
-	d = `M0,0 v-${Radius} a${Radius},${Radius} 0 ${large_arc} 1 ${x},${y}`;
+	if (round(piece) == 100)
+		d = `M0,0 m${Radius},0 a${Radius},${Radius} 0 1,0 -${2*Radius},0 a${Radius},${Radius} 0 1,0 ${2*Radius},0`;
+	else
+		d = `M0,0 v-${Radius} a${Radius},${Radius} 0 ${large_arc} 1 ${x},${y}`;
 	return C_getSVGPath(d, `rotate(${rotation})`, [color, 'bwp-chart-piece-path']);
 }
 
@@ -81,14 +85,16 @@ function PC_getLegendTextOfPiece(legend,color,step,index) {
 	return C_getSVGText(110, (index+0.5)*step-80, legend, [color, 'bwp-chart-legend-text']);
 }
 
-
-function CC_drawColumnChart(svg, pieces, colors, baseline = 0, legends = []) {
+// columnchart
+function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = []) {
 	if ((colors.length != pieces.length))
 		console.error("Invalid inputs, pieces und colors has different lengths");
 	if (legends.length != 0 && legends.length != pieces.length)
 		console.error("Invalid inputs, pieces und legends has different lengths");
 	// Scale Calculation
 	svg.classList.add(...['bwp-columnchart','bwp-chart']);
+	let min_value = Math.min(...pieces);
+	baseline = isNaN(baseline) ? round(min_value - Math.abs(min_value) * 0.1) : baseline;
 	diff = round(Math.max(...pieces)*1.1) - baseline;
 	scale = [baseline, round(baseline+0.2*diff,1), round(baseline+0.4*diff,1), round(baseline+0.6*diff,1), round(baseline+0.8*diff,1), baseline+diff];
 	svg.setAttribute('viewBox','-40 -170 '+(legends.length != 0 ? 400 : 200)+' 200');
@@ -125,7 +131,6 @@ function CC_getPathOfPiece(piece, position, color, length, base, diff) {
 }
 
 function CC_getTextOfPiece(piece, position, length, base, diff) {
-	console.log(piece, position, length, base, diff);
 	x = round(150/length)*(position+0.5);
 	y = (piece-base)/diff*75;
 	return C_getSVGText(x, -y, round(piece,1), ['bwp-chart-piece-text']);
