@@ -32,15 +32,17 @@ function C_processData(data) {
 
 function C_processChart(chart, data) {
 	const [ values, legends ] = C_processData(data);
+	if (values.length < 1 || values.length > 5)
+		console.error('Invalid Data, to many values (only support less than 6)');
+	if (legends.length != 0 && legends.length != values.length)
+		console.error("Invalid inputs, pieces und legends has different lengths");
 	switch (chart.getAttribute('bwp-chart-type')) {
 		case 'piechart':
-			if (values.length < 1 || values.length > 5)
-				console.error('Invalid Data, to many values (only support less than 6)');
+			if (round(sum(values)) != 100)
+				console.error("Invalid inputs, pieces not match 100%: " + sum(values));
 			PC_drawPieChart(chart,values,Color_Palette.slice(0, values.length),chart.hasAttribute('bwp-chart-legend') ? legends : []);
 			break;
 		case 'columnchart':
-			if (values.length < 1 || values.length > 5)
-				console.error('Invalid Data, to many values (only support less than 6)');
 			CC_drawColumnChart(chart,values,Color_Palette.slice(0, values.length),
 				chart.hasAttribute('bwp-chart-baseline') ? parseInt(chart.getAttribute('bwp-chart-baseline')) : NaN,
 				chart.hasAttribute('bwp-chart-legend') ? legends : []);
@@ -51,32 +53,41 @@ function C_processChart(chart, data) {
 	}
 }
 
-function C_getSVGText(x, y, innerText, classes) {
-	return createElement(["http://www.w3.org/2000/svg", "text"],classes,{'x':x,'y':y},innerText);
+function C_getSVGText(x, y, innerText, classes, lineHeight = 20) {
+	const textEl = createElement(["http://www.w3.org/2000/svg", "text"],classes,{'x':x,'y':y});
+	const lines = innerText.toString().split(/\r?\n/); // handles \n or \r\n
+	lines.forEach((line, index) => {
+		const tspan = createElement(["http://www.w3.org/2000/svg", "tspan"],classes,{'x':x,'y':y + index * lineHeight});
+		tspan.textContent = line.trim();
+		textEl.appendChild(tspan);
+	});
+	return textEl;
 }
 
 function C_getSVGPath(d, transform, classes) {
-	return createElement(["http://www.w3.org/2000/svg", "path"],classes,{'d':d,'transform':transform},'');
+	return createElement(["http://www.w3.org/2000/svg", "path"],classes,{'d':d,'transform':transform});
+}
+
+function C_getLegendText(legend, color, x, y, lineindex, step = 20) {
+	return C_getSVGText(x, y + (lineindex+0.5)*step, legend, [color, 'bwp-chart-legend-text'], step);
 }
 
 // piechart
 function PC_drawPieChart(svg, pieces, colors, legends = []) {
-	if ((colors.length != pieces.length))
-		console.error("Invalid inputs, pieces und colors has different lengths");
-	if (round(sum(pieces)) != 100)
-		console.error("Invalid inputs, pieces not match 100% => " + sum(pieces));
-	if (legends.length != 0 && legends.length != pieces.length)
-		console.error("Invalid inputs, pieces und legends has different lengths");
 	svg.classList.add(...['bwp-piechart','bwp-chart']);
 	svg.setAttribute('viewBox','-100 -100 '+(legends.length != 0 ? 400 : 200)+' 200');
 	let sum_pieces = 0;
 	let step = Math.min(Math.round(160/legends.length), 20);
+	let legend_offset = 0;
 	for (let i = 0; i < pieces.length; i++) {
-		let g = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-piece'],{},'');
+		let g = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-piece']);
 		g.appendChild(PC_getPathOfPiece(pieces[i],sum_pieces*3.6,colors[i]));
 		g.appendChild(PC_getTextOfPiece(pieces[i],sum_pieces));
-		if (legends.length != 0)
-			g.appendChild(PC_getLegendTextOfPiece(legends[i],colors[i],step,i));
+		if (legends.length != 0) {
+			let textEl = C_getLegendText(legends[i], colors[i], 110, -80, i+legend_offset)
+			legend_offset = legend_offset + textEl.childElementCount - 1;
+			g.appendChild(textEl);
+		}
 		svg.appendChild(g);
 		sum_pieces += pieces[i];
 	}
@@ -101,16 +112,8 @@ function PC_getPathOfPiece(piece, rotation, color) {
 	return C_getSVGPath(d, `rotate(${rotation})`, [color, 'bwp-chart-piece-path']);
 }
 
-function PC_getLegendTextOfPiece(legend,color,step,index) {
-	return C_getSVGText(110, (index+0.5)*step-80, legend, [color, 'bwp-chart-legend-text']);
-}
-
 // columnchart
 function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = []) {
-	if ((colors.length != pieces.length))
-		console.error("Invalid inputs, pieces und colors has different lengths");
-	if (legends.length != 0 && legends.length != pieces.length)
-		console.error("Invalid inputs, pieces und legends has different lengths");
 	// Scale Calculation
 	svg.classList.add(...['bwp-columnchart','bwp-chart']);
 	let min_value = Math.min(...pieces);
@@ -119,8 +122,8 @@ function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = []) {
 	scale = [baseline, round(baseline+0.2*diff,1), round(baseline+0.4*diff,1), round(baseline+0.6*diff,1), round(baseline+0.8*diff,1), baseline+diff];
 	svg.setAttribute('viewBox','-40 -170 '+(legends.length != 0 ? 400 : 200)+' 200');
 	// Scale
-	let g_scale = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-scale'],{},'');
-	let g_grid = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-grid'],{},'');
+	let g_scale = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-scale']);
+	let g_grid = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-grid']);
 	g_scale.appendChild(C_getSVGPath('M 0 -160 v 160 h 150','',['bwp-chart-scaleline']));
 	if (baseline < 0)
 		g_scale.appendChild(C_getSVGPath('M 0 -'+(-baseline/diff*150)+' h 150','',['bwp-chart-scaleline', 'bwp-chart-zeroline']));
@@ -131,12 +134,16 @@ function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = []) {
 	svg.appendChild(g_scale);
 	svg.appendChild(g_grid);
 	// Pieces
+	let legend_offset = 0;
 	for (let i = 0; i < pieces.length; i++) {
-		let g = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-piece'],{},'');
+		let g = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-piece']);
 		g.appendChild(CC_getPathOfPiece(pieces[i],i,colors[i],pieces.length,baseline,diff));
 		g.appendChild(CC_getTextOfPiece(pieces[i],i,pieces.length,baseline,diff));
-		if (legends.length != 0)
-			g.appendChild(CC_getLegendTextOfPiece(legends[i],colors[i],i));
+		if (legends.length != 0) {
+			let textEl = C_getLegendText(legends[i], colors[i], 170, -150, i+legend_offset)
+			legend_offset = legend_offset + textEl.childElementCount - 1;
+			g.appendChild(textEl);
+		}
 		svg.appendChild(g);
 	}
 }
@@ -154,8 +161,4 @@ function CC_getTextOfPiece(piece, position, length, base, diff) {
 	x = round(150/length)*(position+0.5);
 	y = (piece-base)/diff*75;
 	return C_getSVGText(x, -y, round(piece,1), ['bwp-chart-piece-text']);
-}
-
-function CC_getLegendTextOfPiece(legend,color,index) {
-	return C_getSVGText(170, (index+0.5)*20-150, legend, [color, 'bwp-chart-legend-text']);
 }

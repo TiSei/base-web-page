@@ -7,10 +7,10 @@ function runSideShowApi() {
 	show_timer = Array(boxes.length);
 	for (let index = 0; index < boxes.length; index++) {
 		let box = boxes[index];
-		let frame = createElement(box.getAttribute('bwp-sideshow-type'),['bwp-sideshow'],{},'');
+		let frame = createElement(box.getAttribute('bwp-sideshow-type'),['bwp-sideshow']);
 		box.appendChild(frame);
 		box.setAttribute('bwp-sideshow-index', index);
-		frame.addEventListener('load', function(e) { e.target.classList.add('bwp-fade-in'); });		
+		frame.addEventListener('load', function(e) { e.target.classList.add('bwp-fade-in'); });
 		if (box.hasAttribute('bwp-sideshow-data-source')) {
 			SS_callNextValue(box, true);
 			return;

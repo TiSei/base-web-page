@@ -4,7 +4,7 @@ function toRadian(degree) { return degree * (Math.PI / 180); }
 function toDegree(radians) { return radians * (180 / Math.PI); }
 function round(num, spaces = 0) { return Math.round(num*Math.pow(10,spaces))/Math.pow(10,spaces); }
 
-function createElement(type,classes,attributes,innerHTML) {
+function createElement(type,classes,attributes = {},innerHTML = undefined) {
 	let elem = null;
 	if (type.constructor == Array)
 		elem = document.createElementNS(type[0], type[1]);
@@ -14,7 +14,8 @@ function createElement(type,classes,attributes,innerHTML) {
 	for (let attr_key of Object.keys(attributes)) {
 		elem.setAttribute(attr_key,attributes[attr_key]);
 	}
-	elem.innerHTML = innerHTML;
+	if (innerHTML !== undefined)
+		elem.innerHTML = innerHTML;
 	return elem;
 }
 

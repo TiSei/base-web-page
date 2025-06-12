@@ -20,9 +20,9 @@ function M_updateMenu(menu, dict) {
 		fetch(dict).then(function(response) {
 			return response.json();
 		}).then(function(data) {
-			M_updateMenu(menu, data, true);
+			M_updateMenu(menu, data);
 		}).catch(function(err) {
-			console.log('url request error', err);
+			console.error('url request error', err);
 		});
 		return;
 	}
@@ -33,9 +33,9 @@ function M_newMenuItem(label, href) {
 }
 
 function M_newDropdownMenuItem(label, items) {
-	let dropdown = createElement('div',['bwp-dropdown'],{},'');
+	let dropdown = createElement('div',['bwp-dropdown']);
 	dropdown.appendChild(createElement('div',['bwp-dropbtn'],{},label));
-	let content = createElement('div',['bwp-dropdown-content'],{},'');
+	let content = createElement('div',['bwp-dropdown-content']);
 	for (let key of Object.keys(items)) {
 		content.appendChild(createElement('a',[],{'href':items[key]},key));
 	}
