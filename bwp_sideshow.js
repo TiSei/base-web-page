@@ -94,14 +94,6 @@ function SS_toggleMenu(box, mode) {
 	if (box.hasAttribute('bwp-sideshow-noMenu'))
 		return;
 	let btn = box.querySelectorAll('.bwp-sideshow-menu .bwp-btn');
-	switch (mode) {
-		case 'stop':
-			btn[0].classList.add('bwp-none');
-			btn[1].classList.remove('bwp-none');
-			break;
-		case 'play':
-			btn[0].classList.remove('bwp-none');
-			btn[1].classList.add('bwp-none');
-			break;
-	}
+	btn[0].classList.toggle('bwp-none', mode == 'stop');
+	btn[1].classList.toggle('bwp-none', mode != 'stop');
 }

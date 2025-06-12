@@ -10,14 +10,10 @@ function runLayoutApi() {
 runLayoutApi();
 
 function L_addTopJumper() {
-	let btn = createElement('button',['bwp-none','bwp-top-jumper'],{'onClick':'L_jumpToTop()'},'&#9650;');
+	let btn = createElement('button',['bwp-btn','bwp-none','bwp-top-jumper'],{'onClick':'L_jumpToTop()'},'&#9650;');
 	document.body.appendChild(btn);
 	window.addEventListener('scroll', function() {
-		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-			btn.classList.remove('bwp-none');
-		} else {
-			btn.classList.add('bwp-none');
-		}
+		btn.classList.toggle('bwp-none', !(document.body.scrollTop > 20 || document.documentElement.scrollTop > 20));
 	});
 }
 
