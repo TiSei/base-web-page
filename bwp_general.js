@@ -3,6 +3,8 @@ function sumSecure(arr) { return arr.reduce((a, b) => (isNaN(a) ? a : 0) + (isNa
 function toRadian(degree) { return degree * (Math.PI / 180); }
 function toDegree(radians) { return radians * (180 / Math.PI); }
 function round(num, spaces = 0) { return Math.round(num*Math.pow(10,spaces))/Math.pow(10,spaces); }
+function ceilUp(num) { return Math.ceil(num) }
+function ceilDown(num) { return Math.floor(num); }
 
 function createElement(type,classes,attributes = {},innerHTML = undefined) {
 	let elem = null;

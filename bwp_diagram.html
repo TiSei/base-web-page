@@ -27,7 +27,7 @@
         height: 28%;
       }
       .bwp-chart[bwp-chart-legend] {
-        width: 33%;
+        width: 32%;
       }
     </style>
   </head>
@@ -39,7 +39,7 @@
       <div id="title" class="bwp-container">
         <h2>Example - Diagrams<h2>
       </div>
-      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;,&quot;Columncharts&quot;:&quot;#columncharts&quot;}"></div>
+      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;,&quot;Columncharts&quot;:&quot;#columncharts&quot;,&quot;Linecharts&quot;:&quot;#linecharts&quot;}"></div>
       <div id="json_values" class="bwp-container">
         <h3>Charts - Attributes</h3>
         <table>
@@ -50,7 +50,7 @@
           <tr><td>bwp-chart-hover<br/>optional</td><td>allows to disable chart hover effects includes legend<br/>default, if not set: false</td></tr>
           <tr><td>bwp-chart-legend<br/>optional</td><td>allows to show legend<br/>default, if not set: not shown</td></tr>
         </table>
-        <h3>Scaled Charts - Attributes (Columncharts)</h3>
+        <h3>Scaled Charts - Attributes (Columncharts, Linecharts)</h3>
         <table>
           <tr><th>tag</th><th>description</th></tr>
           <tr><td>bwp-scaled-chart-baseline<br/>optional</td><td>allows to set baseline value in scaled charts<br/>default, if not set: Minimum of Values - 10% </td></tr>
@@ -79,6 +79,17 @@
         <svg bwp-chart-labels bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" bwp-chart-legend bwp-scaled-chart-baseline="10" />
         <svg bwp-chart-labels bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:25.6,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:36.2}" bwp-scaled-chart-baseline="10" />
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" bwp-chart-legend bwp-scaled-chart-baseline="10" bwp-scaled-chart-x_width="200" bwp-scaled-chart-y_width="175"/>
+      </div>
+      <div id="linecharts" class="bwp-container">
+        <h3>Linecharts</h3>
+        <svg bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" />
+        <svg bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
+        <svg bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[-1,4],[-0.5,1.3],[0,-0.2],[0.5,1]]}" />
+        <svg bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
+        <svg bwp-chart-labels bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" />
+        <svg bwp-chart-labels bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
+        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" />
+        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
       </div>
     </div>
   </body>
