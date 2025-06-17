@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="description" content="BWP - example page for sidebar layout">
     <meta name="author" content="TiSei">
-    <meta name="keywords" content="BWP, layouts, WebDesign, sidebar">
+    <meta name="keywords" content="BWP, layouts, WebDesign, sidebar, popup, searchbar">
     <link rel="stylesheet" href="bwp_layout.css">
     <link rel="stylesheet" href="bwp_menu.css">
     <style>
       .strophe { margin: 5px; }
-      .bwp-footer { text-align: center; }
       .bwp-search-bar { width: 100%; }
     </style>
   </head>
   <script src="bwp_general.js"></script>
   <script src="bwp_menu.js" defer></script>
-  <script src="bwp_layout.js" defer bwp-layout-data="[&quot;TopJumper&quot;,&quot;SearchBar&quot;]"></script>
+  <script src="bwp_layout.js" defer></script>
   <body>
     <div class="bwp-sidebar-layout-container">
       <div class="bwp-container bwp-header bwp-headline">
@@ -24,6 +23,7 @@
       </div>
       <div class="bwp-container bwp-sidebar">
         <input class="bwp-search-bar" type="string"/><br/><br/>
+        <button class="bwp-btn" onClick="L_showPopup(document.getElementById('test_popup'))">Show Popup</button><br/><br/>
         Diese Webseite zeigt anhand bekannter Weihnachtslieder die Seitenaufteilung des Sidebar-Layouts, sowie die Funktionsweise von Header und Footer
       </div>
       <div class="bwp-content">
@@ -117,8 +117,9 @@
         </div>
       </div>
     </div>
-    <div class="bwp-container bwp-footer">
+    <div class="bwp-container bwp-footer bwp-align-center">
       Created by TiSei
     </div>
+    <div class="bwp-popup bwp-container" id="test_popup">Hier steht ein Text</div>
   </body>
 </html>

@@ -39,7 +39,7 @@
 }
 
 .bwp-navbar a:hover, .bwp-dropdown:hover .bwp-dropbtn {
-	background-color: #ffbfaa;
+	background-color: var(--default-highlight-color-lighter);
 }
 
 .bwp-dropdown-content {
@@ -65,7 +65,7 @@
 	}
 
 	.bwp-navbar a:hover, .bwp-dropdown:hover .bwp-dropbtn {
-		background-color: #F00;
+		background-color: var(--default-highlight-color-dark);
 	}
 
 	.bwp-dropdown-content a:hover {

@@ -1,10 +1,12 @@
 function runLayoutApi() {
-	let script = document.querySelector('script[bwp-layout-data]');
-	let array = JSON.parse(script.getAttribute('bwp-layout-data'));
-	if (array.indexOf('TopJumper') != -1)
-		L_addTopJumper();
-	if (array.indexOf('SearchBar') != -1)
-		L_addSearchBar();
+	L_addTopJumper();
+	L_addSearchBar();
+	let popups = document.getElementsByClassName('bwp-popup');
+	if (popups.length > 0) {
+		let overlay = createElement('div',[],{'id':'bwp-popup-overlay'});
+		overlay.addEventListener('click', () => { L_hidePopup() });
+		document.body.appendChild(overlay);
+	}
 }
 
 runLayoutApi();
@@ -33,4 +35,16 @@ function L_addSearchBar() {
 			}
 		});
 	}
+}
+
+function L_showPopup(popup) {
+	console.log(popup);
+	popup.classList.add('bwp-popup-show');
+	document.getElementById('bwp-popup-overlay').classList.add('bwp-popup-overlay-show');
+}
+
+function L_hidePopup() {
+	let popups = document.getElementsByClassName('bwp-popup-show');
+	for (let popup of popups) { popup.classList.remove('bwp-popup-show'); }
+	document.getElementById('bwp-popup-overlay').classList.remove('bwp-popup-overlay-show');
 }
