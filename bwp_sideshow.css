@@ -47,10 +47,10 @@
 }
 
 .bwp-sideshow-menu a:hover {
-	color: #FFF;
+	color: var(--default-highlight-color-light);
 }
 
-.bwp-sideshow-menu ol {
+.bwp-sideshow-menu ol, .bwp-sideshow-error {
 	margin: 5px 0px;
 }
 
@@ -75,16 +75,24 @@
 	}
 }
 
+.bwp-sideshow-error {
+	color: var(--default-highlight-color-light);
+}
+
 @media (prefers-color-scheme: dark) {
 	.bwp-sideshow-menu, .bwp-sideshow-menu a {
 		color: var(--default-color-black);
 	}
 
 	.bwp-sideshow-menu a:hover {
-		color: #AAA;
+		color: var(--default-highlight-color-dark);
 	}
 
 	.bwp-sideshow-menu {
 		background-color: var(--default-background-color-dark);
+	}
+
+	.bwp-sideshow-error {
+		color: var(--default-highlight-color-dark);
 	}
 }

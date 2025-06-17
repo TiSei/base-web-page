@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="bwp_sideshow.css">
     <style>
       .bwp-sideshow-container { width: calc(100% - 30px); height: 700px; margin: 15px; }
+      .bwp-container h3 { margin-bottom: 5px; }
+      td { padding: 5px; }
     </style>
   </head>
   <script src="bwp_general.js"></script>
@@ -22,8 +24,19 @@
       </div>
       <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{}"></div>
       <div class="bwp-container">
+        <h3>SideShow Attributes</h3>
+        <table>
+          <tr><th>tag</th><th>description</th></tr>
+          <tr><td>bwp-sideshow-type</td><td>select source type, in time supported:<ul><li>iframe, for websites and pdf</li></ul></td></tr>
+          <tr><td>bwp-sideshow-data</td><td>json-coded sideshow data, static definition</td></tr>
+          <tr><td>bwp-sideshow-data-source</td><td>api url, to request sideshow data dinamic<br/>overwrites bwp-sideshow-data</td></tr>
+          <tr><td>bwp-sideshow-recall</td><td>int value represents seconds until update data by calling apiagain<br/>only usable by bwp-sideshow-data-source</td></tr>
+          <tr><td>bwp-sideshow-noMenu</td><td>disable sideshow menu to execute</td></tr>
+        </table>
+	  </div>
+      <div class="bwp-container">
         <h3>SideShow with IFrame</h3>
-        <div class="bwp-sideshow-container" bwp-sideshow-data="{}" bwp-sideshow-data-source="http://localhost/BWP/show1.json" bwp-sideshow-type="iframe"></div>
+        <div class="bwp-sideshow-container" bwp-sideshow-data-source="http://localhost/BWP/show1.json" bwp-sideshow-type="iframe"></div>
       </div>
       <!--
       <div class="bwp-container">

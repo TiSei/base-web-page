@@ -1,93 +1,99 @@
-let slide_idx;
-let show_timer;
-
 function runSideShowApi() {
 	let boxes = document.querySelectorAll('.bwp-sideshow-container');
-	slide_idx = Array(boxes.length).fill(-1);
-	show_timer = Array(boxes.length);
-	for (let index = 0; index < boxes.length; index++) {
-		let box = boxes[index];
+	for (let i = 0; i < boxes.length; i++) {
+		let box = boxes[i];
 		let frame = createElement(box.getAttribute('bwp-sideshow-type'),['bwp-sideshow']);
 		box.appendChild(frame);
-		box.setAttribute('bwp-sideshow-index', index);
+		box.setAttribute('bwp-sideshow-id', i+1);
 		frame.addEventListener('load', function(e) { e.target.classList.add('bwp-fade-in'); });
-		if (box.hasAttribute('bwp-sideshow-data-source')) {
-			SS_callNextValue(box, true);
-			return;
-		}
-		SS_initMenu(box);
-		SS_Navigate(index);
+		SS_Refresh(i+1);
 	}
 }
 
 runSideShowApi();
 
-function SS_Navigate(index, idx) {
-	let frame = document.querySelector('.bwp-sideshow-container[bwp-sideshow-index="'+index+'"] > .bwp-sideshow');
+function SS_Refresh(id, supressFetch = false) {
+	let box = document.querySelector(`.bwp-sideshow-container[bwp-sideshow-id="${id}"]`);
+	if (box.hasAttribute('bwp-sideshow-timer'))
+		clearTimeout(parseInt(box.getAttribute('box-sideshow-timer')));
+	if (!supressFetch && box.hasAttribute('bwp-sideshow-data-source')) {
+		box.removeAttribute('bwp-sideshow-data');
+		SS_fetchData(box);
+		return;
+	}
+	box.setAttribute('bwp-sideshow-idx', -1);
+	box.querySelector('.bwp-sideshow').classList.remove('bwp-none');
+	SS_refreshMenu(box);
+	SS_Navigate(id);
+}
+
+function SS_fetchData(box) {
+	if (box.hasAttribute('bwp-sideshow-recall'))
+		setTimeout(() => { SS_fetchData(box); }, parseInt(box.getAttribute('bwp-sideshow-recall')));
+	fetch(box.getAttribute('bwp-sideshow-data-source')).then(function(response) {
+		if (!response.ok) throw new Error('HTTP error ' + response.status);
+		return response.text();
+	}).then(function(data) {
+		box.setAttribute('bwp-sideshow-data', data);
+		SS_Refresh(parseInt(box.getAttribute('bwp-sideshow-id')), true);
+	}).catch(function(err) {
+		box.querySelector('.bwp-sideshow').classList.add('bwp-none');
+		SS_refreshMenu(box);
+	});
+}
+
+function SS_Navigate(id, idx) {
+	let frame = document.querySelector(`.bwp-sideshow-container[bwp-sideshow-id="${id}"] > .bwp-sideshow`);
 	let box = frame.parentElement;
-	clearTimeout(show_timer[index]);
-	if (idx != undefined && idx == slide_idx[index] && frame.classList.contains('bwp-fade-in')) {
+	let current_idx = parseInt(box.getAttribute('bwp-sideshow-idx'));
+	clearTimeout(parseInt(box.getAttribute('bwp-sideshow-timer')));
+	if (idx === -1) idx = current_idx;
+	if (idx != undefined && idx == current_idx && frame.classList.contains('bwp-fade-in')) {
 		SS_toggleMenu(box, 'stop');
 		return;
 	}
 	if (frame.classList.contains('bwp-fade-in')) {
 		frame.classList.remove('bwp-fade-in');
-		show_timer[index] = setTimeout('SS_Navigate('+index+','+idx+')', 2000);
+		box.setAttribute('bwp-sideshow-timer', setTimeout(`SS_Navigate(${id},${idx})`, 2000));
 		return;
 	}
-	let values = SS_getSlideValues(box);
+	let data = JSON.parse(box.getAttribute('bwp-sideshow-data'));
+	let new_idx = idx;
 	if (idx != undefined) {
-		slide_idx[index] = idx;
 		SS_toggleMenu(box, 'stop');
 	} else {
-		slide_idx[index] = values.length == 1 ? 0 : (slide_idx[index] + 1) % values.length;
-		show_timer[index] = setTimeout('SS_Navigate('+index+')', values[slide_idx[index]][2]*1000);
+		new_idx = (current_idx + 1) % data.length;
+		box.setAttribute('bwp-sideshow-timer', setTimeout(`SS_Navigate(${id})`, data[new_idx][2] * 1000));
 	}
-	frame.src = values[slide_idx[index]][0];
+	box.setAttribute('bwp-sideshow-idx', new_idx);
+	frame.src = data[new_idx][0];
 }
 
-function SS_getSlideValues(box) {
-	let data = JSON.parse(box.getAttribute('bwp-sideshow-data'));
-	if (box.hasAttribute('bwp-sideshow-recall'))
-		SS_callNextValue(box);
-	return data;
-}
-
-function SS_callNextValue(box, first_call) {
-	fetch(box.getAttribute('bwp-sideshow-data-source')).then(function(response) {
-		return response.text();
-	}).then(function(data) {
-		box.setAttribute('bwp-sideshow-data', data);
-		if (!first_call)
-			return;
-		SS_initMenu(box);
-		SS_Navigate(box.getAttribute('bwp-sideshow-index'));
-	}).catch(function(err) {
-		console.log('url request error', err);
-	});
-}
-
-function SS_initMenu(box) {
+function SS_refreshMenu(box) {
 	if (box.hasAttribute('bwp-sideshow-noMenu'))
 		return;
-	let div = createElement('div',['bwp-sideshow-menu'],{},'<b>Sideshow - Menü</b><br/>');
-	let index = box.getAttribute('bwp-sideshow-index');
-	if (!box.hasAttribute('bwp-sideshow-recall')) {
+	let div = box.querySelector('.bwp-sideshow-menu');
+	if (div === null) {
+		div = createElement('div',['bwp-sideshow-menu']);
+		box.appendChild(div);
+	} else
+		div.replaceChildren();
+	div.innerHTML = '<b>Sideshow - Menü</b><br/>';
+	let id = box.getAttribute('bwp-sideshow-id');
+	if (box.hasAttribute('bwp-sideshow-data')) {
 		let data = JSON.parse(box.getAttribute('bwp-sideshow-data'));
-		let html = '<ol>';
-		for (let i = 0; i < data.length; i++) {
-			html += '<li>&emsp;<a href="javascript:SS_Navigate('+index+','+i+')">'+data[i][1]+'</a></li>';
-		}
-		div.innerHTML += html + '</ol>';
+		let ol = createElement('ol',[]);
+		for (let i = 0; i < data.length; i++) { ol.appendChild(createElement('li',[],{},`&emsp;<a href="javascript:SS_Navigate(${id},${i})">${data[i][1]}</a>`)); }
+		div.appendChild(ol);
+		div.appendChild(createElement('button',['bwp-btn'],{},'&#10073;&#10073;'));
+		div.lastChild.addEventListener('click', function(e) { SS_Navigate(id, -1); });
+		div.appendChild(createElement('button',['bwp-btn','bwp-none'],{},'&#9658;'));
+		div.lastChild.addEventListener('click', function(e) { let box_ref = e.target.parentElement.parentElement; SS_Navigate(id); SS_toggleMenu(box_ref, 'play'); });
+	} else {
+		div.appendChild(createElement('span',['bwp-sideshow-error'],{},'API-Request failed'));
+		div.innerHTML += '<br/>';
 	}
-	let btn = createElement('button',['bwp-btn'],{},'&#10073;&#10073;');
-	btn.addEventListener('click', function(e) { let idx = e.target.parentElement.parentElement.getAttribute('bwp-sideshow-index'); SS_Navigate(idx,slide_idx[idx]); });
-	div.appendChild(btn);
-	btn = createElement('button',['bwp-btn','bwp-none'],{},'&#9658;');
-	btn.addEventListener('click', function(e) { let box = e.target.parentElement.parentElement; SS_Navigate(box.getAttribute('bwp-sideshow-index')); SS_toggleMenu(box, 'play'); });
-	div.appendChild(btn);
-	div.appendChild(createElement('button',['bwp-btn'],{'onClick':'javascript:location.reload()'},'&#8634;'));
-	box.appendChild(div);
+	div.appendChild(createElement('button',['bwp-btn'],{'onClick':`javascript:SS_Refresh(${id})`},'&#8634;'));
 }
 
 function SS_toggleMenu(box, mode) {
