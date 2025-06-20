@@ -24,3 +24,14 @@ function createElement(type,classes,attributes = {},innerHTML = undefined) {
 function displayConfirmAlert(msg) {
 	return confirm(msg);
 }
+
+async function universalFetchAsync({url, responseType = 'text', onSuccess = () => {}, onError = () => {}}) {
+	try {
+		const response = await fetch(url);
+		if (!response.ok) throw new Error('HTTP error ' + response.status);
+		const data = responseType === 'json' ? await response.json() : await response.text();
+		onSuccess(data);
+	} catch (err) {
+		onError(err);
+	}
+}

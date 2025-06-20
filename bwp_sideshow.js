@@ -30,15 +30,16 @@ function SS_Refresh(id, supressFetch = false) {
 function SS_fetchData(box) {
 	if (box.hasAttribute('bwp-sideshow-recall'))
 		setTimeout(() => { SS_fetchData(box); }, parseInt(box.getAttribute('bwp-sideshow-recall')));
-	fetch(box.getAttribute('bwp-sideshow-data-source')).then(function(response) {
-		if (!response.ok) throw new Error('HTTP error ' + response.status);
-		return response.text();
-	}).then(function(data) {
-		box.setAttribute('bwp-sideshow-data', data);
-		SS_Refresh(parseInt(box.getAttribute('bwp-sideshow-id')), true);
-	}).catch(function(err) {
-		box.querySelector('.bwp-sideshow').classList.add('bwp-none');
-		SS_refreshMenu(box);
+	universalFetchAsync({
+		url: box.getAttribute('bwp-sideshow-data-source'),
+		onSuccess: data => {
+			box.setAttribute('bwp-sideshow-data', data);
+			SS_Refresh(parseInt(box.getAttribute('bwp-sideshow-id')), true);
+		},
+		onError: err => {
+			box.querySelector('.bwp-sideshow').classList.add('bwp-none');
+			SS_refreshMenu(box);
+		}
 	});
 }
 
@@ -58,6 +59,8 @@ function SS_Navigate(id, idx) {
 		return;
 	}
 	let data = JSON.parse(box.getAttribute('bwp-sideshow-data'));
+	if (data === null || data.length <= current_idx)
+		return;
 	let new_idx = idx;
 	if (idx != undefined) {
 		SS_toggleMenu(box, 'stop');
