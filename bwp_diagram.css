@@ -1,4 +1,4 @@
-/* Diagram-Colors */
+/* diagram-colors */
 :root {
 	--diagram-c1-light: #7cfc00;
 	--diagram-c2-light: #ffd700;
@@ -85,6 +85,7 @@
 
 .bwp-chart-serie-line {
 	fill: none !important;
+	stroke-width: 4;
 }
 
 .bwp-chart-serie-line.bwp-dc1 { stroke: var(--diagram-c1-light); }
@@ -92,6 +93,20 @@
 .bwp-chart-serie-line.bwp-dc3 { stroke: var(--diagram-c3-light); }
 .bwp-chart-serie-line.bwp-dc4 { stroke: var(--diagram-c4-light); }
 .bwp-chart-serie-line.bwp-dc5 { stroke: var(--diagram-c5-light); }
+
+.bwp-chart-error > div > span {
+	color: var(--default-highlight-color-light);
+	margin-bottom: 5px;
+}
+
+.bwp-chart-error > div {
+	height: 90%;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 
 @media (prefers-color-scheme: dark) {
 	.bwp-dc1 { fill: var(--diagram-c1-dark); }
@@ -108,4 +123,5 @@
 	.bwp-chart-serie-line.bwp-dc3 { stroke: var(--diagram-c3-dark); }
 	.bwp-chart-serie-line.bwp-dc4 { stroke: var(--diagram-c4-dark); }
 	.bwp-chart-serie-line.bwp-dc5 { stroke: var(--diagram-c5-dark); }
+	.bwp-chart-error > div > span { color: var(--default-highlight-color-dark); }
 }

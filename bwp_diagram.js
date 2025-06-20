@@ -3,23 +3,42 @@ const TextRadius = 65;
 const Color_Palette = ['bwp-dc1','bwp-dc2','bwp-dc3','bwp-dc4','bwp-dc5'];
 
 function runChartApi() {
-	let chart_list = document.querySelectorAll('svg[bwp-chart-type][bwp-chart-data]');
+	let chart_list = document.querySelectorAll('svg[bwp-chart-type][bwp-chart-data], svg[bwp-chart-type][bwp-chart-data-source]');
 	for (let chart of chart_list) {
-		let data = JSON.parse(chart.getAttribute('bwp-chart-data'));
-		if (typeof data === 'string') {
-			fetch(data).then(function(response) {
-				return response.json();
-			}).then(function(data) {
-				C_processChart(chart, data);
-			}).catch(function(err) {
-				console.error('url request error', err);
-			});
-		} else
-			C_processChart(chart, data);
+		chart.classList.add(['bwp-chart']);
+		C_processChart(chart);
 	}
 }
 
 runChartApi();
+
+function C_processChart(chart) {
+	chart.innerHTML = '';
+	chart.removeAttribute('viewBox');
+	if (chart.hasAttribute('bwp-chart-data-source')) {
+		if (chart.hasAttribute('bwp-chart-recall')) {
+			if (chart.hasAttribute('bwp-chart-timer'))
+				clearTimeout(parseInt(chart.getAttribute('bwp-chart-timer')));
+			chart.setAttribute('bwp-chart-timer', setTimeout(() => { C_processChart(chart); }, parseInt(chart.getAttribute('bwp-chart-recall')) * 1000));
+		}
+		universalFetchAsync({
+			url: chart.getAttribute('bwp-chart-data-source'),
+			responseType: 'json',
+			onSuccess: data => {
+				C_updateChart(chart, data);
+			},
+			onError: err => {
+				chart.appendChild(createElement(
+					["http://www.w3.org/2000/svg", "foreignObject"],
+					['bwp-chart-error'],
+					{ x: 0, y: 0, width: '100%', height: '100%' },
+					'<div><span>API-Request failed</span><button class="bwp-btn" onClick="C_processChart(this.parentElement.parentElement.parentElement)">Try again</button></div>'
+				));
+			}
+		});
+	} else
+		C_updateChart(chart, JSON.parse(chart.getAttribute('bwp-chart-data')));
+}
 
 function C_processData(data) {
 	if (Array.isArray(data))
@@ -27,10 +46,10 @@ function C_processData(data) {
 	else if (typeof data === 'object' && data !== null)
 		return [ Object.values(data), Object.keys(data) ];
 	else
-		console.error('not supported data structure: '+json);
+		console.error('not supported data structure:',data);
 }
 
-function C_processChart(chart, data) {
+function C_updateChart(chart, data) {
 	const [ values, legends ] = C_processData(data);
 	if (values.length < 1 || values.length > 5)
 		console.error('Invalid Data, to many values (only support less than 6)');
@@ -95,6 +114,7 @@ function C_getScaledChart(svg, value_y_min, value_y_max, value_x_min, value_x_ma
 	const scale_x = steps.map(s => round((value_x_min + s * diff_x),1));
 	const scale_y = steps.map(s => round((baseline + s * diff_y),1));
 	// Set Display
+	svg.classList.add('bwp-scaled-chart');
 	svg.setAttribute('viewBox',`-35 -${y_width+20} ${(hide_Legend ? x_width + 70 : 2 * x_width + 140)} ${60+y_width}`);
 	// Scale
 	let g_scale_x = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-scale','bwp-chart-scale-x']);
@@ -123,7 +143,7 @@ function C_getScaledChart(svg, value_y_min, value_y_max, value_x_min, value_x_ma
 
 // piechart
 function PC_drawPieChart(svg, pieces, colors, legends = []) {
-	svg.classList.add(...['bwp-piechart','bwp-chart']);
+	svg.classList.add('bwp-piechart');
 	svg.setAttribute('viewBox','-100 -100 '+(legends.length != 0 ? 400 : 200)+' 200');
 	let sum_pieces = 0;
 	let step = Math.min(Math.round(160/legends.length), 20);
@@ -163,7 +183,7 @@ function PC_getPathOfPiece(piece, rotation, color) {
 
 // columnchart
 function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = [], x_width = 150, y_width = 150) {
-	svg.classList.add(...['bwp-columnchart','bwp-chart','bwp-scaled-chart']);
+	svg.classList.add('bwp-columnchart');
 	const [x_axis, baseline_calc, diff_x, diff_y] = C_getScaledChart(svg, Math.min(...pieces), Math.max(...pieces), 0, pieces.length, baseline, x_width, y_width, legends.length == 0);
 	// Pieces
 	let legend_offset = 0;
@@ -204,7 +224,7 @@ function LC_drawLineChart(svg, values, colors, baseline = NaN, legends = [], x_w
 		y_min = Math.min(y_min, ...series.map(([x, y]) => y));
 		y_max = Math.max(y_max, ...series.map(([x, y]) => y));
 	}
-	svg.classList.add(...['bwp-linechart','bwp-chart','bwp-scaled-chart']);
+	svg.classList.add('bwp-linechart');
 	const [x_axis, y_axis, diff_x, diff_y] = C_getScaledChart(svg, y_min, y_max, x_min, x_max, baseline, x_width, y_width, legends.length == 0);
 	// Lines
 	let legend_offset = 0;
@@ -226,7 +246,6 @@ function LC_getPoint(value, min, max, width) {
 }
 
 function LC_getPathOfSerie(serie, color, x_min, x_max, y_min, y_max, x_width, y_width) {
-	console.log(serie, color, x_min, x_max, y_min, y_max, x_width, y_width);
 	let d = `M ${LC_getPoint(serie[0][0],x_min,x_max,x_width)+5} ${-LC_getPoint(serie[0][1],y_min,y_max,y_width)} `;
 	for (let i = 1; i < serie.length; i++) {
 		d += `L ${LC_getPoint(serie[i][0],x_min,x_max,x_width)+5} ${-LC_getPoint(serie[i][1],y_min,y_max,y_width)} `;

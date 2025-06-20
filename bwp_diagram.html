@@ -45,10 +45,16 @@
         <table>
           <tr><th>tag</th><th>description</th></tr>
           <tr><td>bwp-chart-type</td><td>select charttype, in time supported:<ul><li>piechart</li><li>columnchart</li></ul></td></tr>
-          <tr><td>bwp-chart-data</td><td>json-coded chart data, that will shown.<br/>The format is defined by the used charttype</td></tr>
           <tr><td>bwp-chart-labels<br/>optional</td><td>allows to disable chart description except legend<br/>default, if not set: false</td></tr>
           <tr><td>bwp-chart-hover<br/>optional</td><td>allows to disable chart hover effects includes legend<br/>default, if not set: false</td></tr>
           <tr><td>bwp-chart-legend<br/>optional</td><td>allows to show legend<br/>default, if not set: not shown</td></tr>
+        </table>
+        <h3>Data - Attributes</h3>
+        <table>
+          <tr><th>tag</th><th>description</th></tr>
+          <tr><td>bwp-chart-data</td><td>json-coded values to display<br/>automatic set by API-Requests</td></tr>
+          <tr><td>bwp-chart-data-source<br/>optional</td><td>url to call API for dynamic values<br/>default, called once by loading script</td></tr>
+          <tr><td>bwp-chart-recall<br/>optional</td><td>seconds until repeats call API</td></tr>
         </table>
         <h3>Scaled Charts - Attributes (Columncharts, Linecharts)</h3>
         <table>
@@ -90,6 +96,11 @@
         <svg bwp-chart-labels bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" />
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
+      </div>
+      <div id="api" class="bwp-container">
+        <h3>Chart-API</h3>
+        <svg bwp-chart-type="linechart" bwp-chart-data-source="http://127.0.0.1:5000/test" />
+        <svg bwp-chart-type="linechart" bwp-chart-data-source="http://localhost/BWP/chart.json" bwp-chart-recall="10" />
       </div>
     </div>
   </body>
