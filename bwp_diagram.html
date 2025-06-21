@@ -16,6 +16,10 @@
         padding: 5px;
         text-align: left;
       }
+      th {
+        padding: 5px;
+        text-align: center;
+      }
       table {
         margin-bottom: 20px;
       }
@@ -28,6 +32,9 @@
       }
       .bwp-chart[bwp-chart-legend] {
         width: 32%;
+      }
+      .bwp-chart[bwp-chart-legend_width="100"] {
+        width: 24%;
       }
     </style>
   </head>
@@ -44,10 +51,11 @@
         <h3>Charts - Attributes</h3>
         <table>
           <tr><th>tag</th><th>description</th></tr>
-          <tr><td>bwp-chart-type</td><td>select charttype, in time supported:<ul><li>piechart</li><li>columnchart</li></ul></td></tr>
+          <tr><td>bwp-chart-type</td><td>select charttype, in time supported:<ul><li>piechart</li><li>columnchart</li><li>linechart</li></ul></td></tr>
           <tr><td>bwp-chart-labels<br/>optional</td><td>allows to disable chart description except legend<br/>default, if not set: false</td></tr>
           <tr><td>bwp-chart-hover<br/>optional</td><td>allows to disable chart hover effects includes legend<br/>default, if not set: false</td></tr>
           <tr><td>bwp-chart-legend<br/>optional</td><td>allows to show legend<br/>default, if not set: not shown</td></tr>
+          <tr><td>bwp-chart-legend_width<br/>optional</td><td>force space of legend<br/>default, if not set: 200</td></tr>
         </table>
         <h3>Data - Attributes</h3>
         <table>
@@ -64,6 +72,16 @@
           <tr><td>bwp-scaled-chart-y_width<br/>optional</td><td>allows to set width of chart (y-axis) in scaled charts<br/>default, if not set: 150 (square representation)</td></tr>
         </table>
       </div>
+      <div id="sizing" class="bwp-container">
+        <h3>Size</h3>
+        Relations between size-manipulate parameters and expansion
+        <table>
+          <tr><th rowspan="2">Charts</th><th colspan="2">Relations</th><th colspan="3">defaults</th></tr>
+          <tr><th>height</th><th>width</th><th>legend_width</th><th>x_width</th><th>y_width</th></tr>
+          <tr><td>piechart</td><td>200</td><td>200 + legend_width</td><td>200</td><td colspan="2">undefined</td></tr>
+          <tr><td>columnchart, linechart</td><td>50 + y_width</td><td>50 + x_width + legend_width</td><td>200</td><td>150</td><td>150</td></tr>
+        </table>
+      </div>
       <div id="piecharts" class="bwp-container">
         <h3>Piecharts</h3>
         <svg bwp-chart-type="piechart" bwp-chart-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
@@ -74,6 +92,7 @@
         <svg bwp-chart-labels bwp-chart-type="piechart" bwp-chart-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}" bwp-chart-legend />
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="piechart" bwp-chart-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="piechart" bwp-chart-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}" bwp-chart-legend />
+        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="piechart" bwp-chart-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}" bwp-chart-legend bwp-chart-legend_width="100"/>
       </div>
       <div id="columncharts" class="bwp-container">
         <h3>Columncharts</h3>
@@ -84,7 +103,8 @@
         <svg bwp-chart-labels bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:25.6,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:36.2}" bwp-scaled-chart-baseline="10" />
         <svg bwp-chart-labels bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" bwp-chart-legend bwp-scaled-chart-baseline="10" />
         <svg bwp-chart-labels bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:25.6,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:36.2}" bwp-scaled-chart-baseline="10" />
-        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" bwp-chart-legend bwp-scaled-chart-baseline="10" bwp-scaled-chart-x_width="200" bwp-scaled-chart-y_width="175"/>
+        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" bwp-chart-legend bwp-scaled-chart-baseline="10" bwp-scaled-chart-x_width="100" bwp-scaled-chart-y_width="100" bwp-chart-legend_width="150"/>
+        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="columnchart" bwp-chart-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" bwp-chart-legend bwp-scaled-chart-baseline="10" bwp-chart-legend_width="100"/>
       </div>
       <div id="linecharts" class="bwp-container">
         <h3>Linecharts</h3>
@@ -96,6 +116,7 @@
         <svg bwp-chart-labels bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" />
         <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend />
+        <svg bwp-chart-labels bwp-chart-hover bwp-chart-type="linechart" bwp-chart-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" bwp-chart-legend bwp-chart-legend_width="100" />
       </div>
       <div id="api" class="bwp-container">
         <h3>Chart-API</h3>

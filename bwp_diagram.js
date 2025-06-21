@@ -60,21 +60,24 @@ function C_updateChart(chart, data) {
 			if (round(sum(values)) != 100)
 				console.error("Invalid inputs, pieces not match 100%: " + sum(values));
 			PC_drawPieChart(chart,values,Color_Palette.slice(0, values.length),
-				chart.hasAttribute('bwp-chart-legend') ? legends : []);
+				chart.hasAttribute('bwp-chart-legend') ? legends : [],
+				chart.hasAttribute('bwp-chart-legend_width') ? parseInt(chart.getAttribute('bwp-chart-legend_width')) : 200);
 			break;
 		case 'columnchart':
 			CC_drawColumnChart(chart,values,Color_Palette.slice(0, values.length),
 				chart.hasAttribute('bwp-scaled-chart-baseline') ? parseInt(chart.getAttribute('bwp-scaled-chart-baseline')) : NaN,
 				chart.hasAttribute('bwp-chart-legend') ? legends : [],
 				chart.hasAttribute('bwp-scaled-chart-x_width') ? parseInt(chart.getAttribute('bwp-scaled-chart-x_width')) : 150,
-				chart.hasAttribute('bwp-scaled-chart-y_width') ? parseInt(chart.getAttribute('bwp-scaled-chart-y_width')) : 150);
+				chart.hasAttribute('bwp-scaled-chart-y_width') ? parseInt(chart.getAttribute('bwp-scaled-chart-y_width')) : 150,
+				chart.hasAttribute('bwp-chart-legend_width') ? parseInt(chart.getAttribute('bwp-chart-legend_width')) : 200);
 			break;
 		case 'linechart':
 			LC_drawLineChart(chart,values,Color_Palette.slice(0, values.length),
 				chart.hasAttribute('bwp-scaled-chart-baseline') ? parseInt(chart.getAttribute('bwp-scaled-chart-baseline')) : NaN,
 				chart.hasAttribute('bwp-chart-legend') ? legends : [],
 				chart.hasAttribute('bwp-scaled-chart-x_width') ? parseInt(chart.getAttribute('bwp-scaled-chart-x_width')) : 150,
-				chart.hasAttribute('bwp-scaled-chart-y_width') ? parseInt(chart.getAttribute('bwp-scaled-chart-y_width')) : 150);
+				chart.hasAttribute('bwp-scaled-chart-y_width') ? parseInt(chart.getAttribute('bwp-scaled-chart-y_width')) : 150,
+				chart.hasAttribute('bwp-chart-legend_width') ? parseInt(chart.getAttribute('bwp-chart-legend_width')) : 200);
 			break;
 		default:
 			console.error('Not supported chart type: '+chart.getAttribute('bwp-chart-type'));
@@ -104,7 +107,7 @@ function C_getLegendText(legend, color, x, y, lineindex, step = 20) {
 	return C_getSVGText(x, y + (lineindex+0.5)*step, legend, [color, 'bwp-chart-legend-text'], step);
 }
 
-function C_getScaledChart(svg, value_y_min, value_y_max, value_x_min, value_x_max, baseline = NaN, x_width = 150, y_width = 150, hide_Legend = false) {
+function C_getScaledChart(svg, value_y_min, value_y_max, value_x_min, value_x_max, baseline = NaN, x_width = 150, y_width = 150, hide_Legend = false, legend_width = 150) {
 	// Scale Calculation
 	if (isNaN(baseline))
 		baseline = ceilDown(value_y_min - 0.01);
@@ -115,7 +118,7 @@ function C_getScaledChart(svg, value_y_min, value_y_max, value_x_min, value_x_ma
 	const scale_y = steps.map(s => round((baseline + s * diff_y),1));
 	// Set Display
 	svg.classList.add('bwp-scaled-chart');
-	svg.setAttribute('viewBox',`-35 -${y_width+20} ${(hide_Legend ? x_width + 70 : 2 * x_width + 140)} ${60+y_width}`);
+	svg.setAttribute('viewBox',`-30 -${y_width+20} ${x_width + 50 + (hide_Legend ? 0 : legend_width)} ${50+y_width}`);
 	// Scale
 	let g_scale_x = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-scale','bwp-chart-scale-x']);
 	let g_scale_y = createElement(["http://www.w3.org/2000/svg", "g"],['bwp-chart-scale','bwp-chart-scale-y']);
@@ -142,9 +145,9 @@ function C_getScaledChart(svg, value_y_min, value_y_max, value_x_min, value_x_ma
 }
 
 // piechart
-function PC_drawPieChart(svg, pieces, colors, legends = []) {
+function PC_drawPieChart(svg, pieces, colors, legends = [], legend_width = 200) {
 	svg.classList.add('bwp-piechart');
-	svg.setAttribute('viewBox','-100 -100 '+(legends.length != 0 ? 400 : 200)+' 200');
+	svg.setAttribute('viewBox',`-100 -100 ${200 + (legends.length != 0 ? legend_width : 0)} 200`);
 	let sum_pieces = 0;
 	let step = Math.min(Math.round(160/legends.length), 20);
 	let legend_offset = 0;
@@ -182,9 +185,9 @@ function PC_getPathOfPiece(piece, rotation, color) {
 }
 
 // columnchart
-function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = [], x_width = 150, y_width = 150) {
+function CC_drawColumnChart(svg, pieces, colors, baseline = NaN, legends = [], x_width = 150, y_width = 150, legend_width = 200) {
 	svg.classList.add('bwp-columnchart');
-	const [x_axis, baseline_calc, diff_x, diff_y] = C_getScaledChart(svg, Math.min(...pieces), Math.max(...pieces), 0, pieces.length, baseline, x_width, y_width, legends.length == 0);
+	const [x_axis, baseline_calc, diff_x, diff_y] = C_getScaledChart(svg, Math.min(...pieces), Math.max(...pieces), 0, pieces.length, baseline, x_width, y_width, legends.length == 0, legend_width);
 	// Pieces
 	let legend_offset = 0;
 	for (let i = 0; i < pieces.length; i++) {
@@ -215,7 +218,7 @@ function CC_getTextOfPiece(piece, position, space, base, diff) {
 }
 
 // linechart
-function LC_drawLineChart(svg, values, colors, baseline = NaN, legends = [], x_width = 150, y_width = 150) {
+function LC_drawLineChart(svg, values, colors, baseline = NaN, legends = [], x_width = 150, y_width = 150, legend_width = 200) {
 	let y_min = Infinity, y_max = -Infinity;
 	let x_min = Infinity, x_max = -Infinity;
 	for (let series of values) {
@@ -225,7 +228,7 @@ function LC_drawLineChart(svg, values, colors, baseline = NaN, legends = [], x_w
 		y_max = Math.max(y_max, ...series.map(([x, y]) => y));
 	}
 	svg.classList.add('bwp-linechart');
-	const [x_axis, y_axis, diff_x, diff_y] = C_getScaledChart(svg, y_min, y_max, x_min, x_max, baseline, x_width, y_width, legends.length == 0);
+	const [x_axis, y_axis, diff_x, diff_y] = C_getScaledChart(svg, y_min, y_max, x_min, x_max, baseline, x_width, y_width, legends.length == 0, legend_width);
 	// Lines
 	let legend_offset = 0;
 	for (let i = 0; i < values.length; i++) {
