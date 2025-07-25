@@ -9,6 +9,7 @@
 	--default-background-color-dark: #222;
 	--default-highlight-color-lighter: #FBA;
 	--default-highlight-color-light: #F00;
+	--default-highlight-color-darker: #711;
 	--default-highlight-color-dark: #B00;
 }
 
@@ -118,8 +119,6 @@ button.bwp-top-jumper {
 	font-size: 14px;
 	font-family: inherit;
 	font-weight: normal;
-	color: var(--default-color-light);
-	background-color: var(--action-background-color-light);
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
@@ -129,8 +128,20 @@ button.bwp-top-jumper {
 	vertical-align: middle;
 }
 
-.bwp-btn:hover {
+.bwp-btn:not(:disabled):hover {
 	background-color: var(--action-background-color-hover-light);
+}
+
+/* form elements */
+.bwp-btn, .bwp-search-bar, input, textarea, select {
+	color: var(--default-color-light);
+	background-color: var(--action-background-color-light);
+	font-family: Tahoma;
+}
+
+*:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 /* popup */
@@ -177,12 +188,12 @@ button.bwp-top-jumper {
 		filter: brightness(80%);
 	}
 
-	.bwp-btn, .bwp-search-bar {
+	.bwp-btn, .bwp-search-bar, input, textarea, select {
 		background-color: var(--action-background-color-dark);
 		color: var(--default-color-dark);
 	}
 
-	.bwp-btn:hover {
+	.bwp-btn:not(:disabled):hover {
 		background-color: var(--action-background-color-hover-dark);
 	}
 

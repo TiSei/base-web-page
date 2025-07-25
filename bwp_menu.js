@@ -13,9 +13,12 @@ runMenuApi();
 
 function M_updateMenu(menu, dict) {
 	if (dict.constructor == Object) {
+		activeHref = '';
 		for (let key of Object.keys(dict)) {
 			menu.appendChild(dict[key].constructor == Object ? M_newDropdownMenuItem(key, dict[key]) : M_newMenuItem(key, dict[key]));
 		}
+		if (activeHref !== '')
+			document.querySelector('#menu a[href="'+activeHref+'"]').classList.add('bwp-menu-active');
 	} else {
 		fetch(dict).then(function(response) {
 			return response.json();
@@ -24,11 +27,12 @@ function M_updateMenu(menu, dict) {
 		}).catch(function(err) {
 			console.error('url request error', err);
 		});
-		return;
 	}
 }
 
-function M_newMenuItem(label, href) {
+function M_newMenuItem(label, href, forceActive = true) {
+	if (!href.startsWith('#') && window.location.pathname.includes(href) && href.length > activeHref.length)
+		activeHref = href;
 	return createElement('a',[],{'href':href},label);
 }
 
@@ -37,7 +41,7 @@ function M_newDropdownMenuItem(label, items) {
 	dropdown.appendChild(createElement('div',['bwp-dropbtn'],{},label));
 	let content = createElement('div',['bwp-dropdown-content']);
 	for (let key of Object.keys(items)) {
-		content.appendChild(createElement('a',[],{'href':items[key]},key));
+		content.appendChild(M_newMenuItem(key,items[key]));
 	}
 	dropdown.appendChild(content);
 	return dropdown;
