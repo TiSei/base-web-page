@@ -1,24 +1,20 @@
 /* diagram-colors */
 :root {
-	--diagram-c1-light: #7cfc00;
-	--diagram-c2-light: #ffd700;
-	--diagram-c3-light: #ff6347;
-	--diagram-c4-light: #20b2aa;
-	--diagram-c5-light: #87cefa;
-	--diagram-c1-dark: #64b514;
-	--diagram-c2-dark: #b89e14;
-	--diagram-c3-dark: #e63d1f;
-	--diagram-c4-dark: #25837e;
-	--diagram-c5-dark: #50abe4;
+	--diagram-c1: #7cfc00;
+	--diagram-c2: #ffd700;
+	--diagram-c3: #ff6347;
+	--diagram-c4: #20b2aa;
+	--diagram-c5: #87cefa;
+	--diagram-background-color: #EEE;
 }
 
-.bwp-dc1 { fill: var(--diagram-c1-light); }
-.bwp-dc2 { fill: var(--diagram-c2-light); }
-.bwp-dc3 { fill: var(--diagram-c3-light); }
-.bwp-dc4 { fill: var(--diagram-c4-light); }
-.bwp-dc5 { fill: var(--diagram-c5-light); }
+.bwp-dc1 { fill: var(--diagram-c1); }
+.bwp-dc2 { fill: var(--diagram-c2); }
+.bwp-dc3 { fill: var(--diagram-c3); }
+.bwp-dc4 { fill: var(--diagram-c4); }
+.bwp-dc5 { fill: var(--diagram-c5); }
 
-.bwp-chart { background-color: #EEEEEE; }
+.bwp-chart { background-color: var(--diagram-background-color); }
 
 .bwp-chart-legend-text {
 	font-size: 18px;
@@ -58,6 +54,7 @@
 	pointer-events: none;
 	text-anchor: middle;
 	dominant-baseline: middle;
+	fill: var(--default-color);
 }
 
 .bwp-chart:not(.bwp-chart[bwp-chart-labels]) .bwp-chart-piece-label,
@@ -71,7 +68,7 @@
 }
 
 .bwp-chart-scale, .bwp-chart-axes, .bwp-chart-serie-line {
-	stroke: var(--default-color-light);
+	stroke: var(--default-color);
 	fill: none;
 }
 
@@ -88,14 +85,14 @@
 	stroke-width: 4;
 }
 
-.bwp-chart-serie-line.bwp-dc1 { stroke: var(--diagram-c1-light); }
-.bwp-chart-serie-line.bwp-dc2 { stroke: var(--diagram-c2-light); }
-.bwp-chart-serie-line.bwp-dc3 { stroke: var(--diagram-c3-light); }
-.bwp-chart-serie-line.bwp-dc4 { stroke: var(--diagram-c4-light); }
-.bwp-chart-serie-line.bwp-dc5 { stroke: var(--diagram-c5-light); }
+.bwp-chart-serie-line.bwp-dc1 { stroke: var(--diagram-c1); }
+.bwp-chart-serie-line.bwp-dc2 { stroke: var(--diagram-c2); }
+.bwp-chart-serie-line.bwp-dc3 { stroke: var(--diagram-c3); }
+.bwp-chart-serie-line.bwp-dc4 { stroke: var(--diagram-c4); }
+.bwp-chart-serie-line.bwp-dc5 { stroke: var(--diagram-c5); }
 
 .bwp-chart-error > div > span {
-	color: var(--default-highlight-color-light);
+	color: var(--default-highlight-color-higher);
 	margin-bottom: 5px;
 }
 
@@ -109,19 +106,14 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.bwp-dc1 { fill: var(--diagram-c1-dark); }
-	.bwp-dc2 { fill: var(--diagram-c2-dark); }
-	.bwp-dc3 { fill: var(--diagram-c3-dark); }
-	.bwp-dc4 { fill: var(--diagram-c4-dark); }
-	.bwp-dc5 { fill: var(--diagram-c5-dark); }
-	.bwp-chart { background-color: #333333; }
-	.bwp-chart-piece-label, .bwp-chart-serie-labels { fill: var(--default-color-dark); }
+	:root {
+		--diagram-c1: #64b514;
+		--diagram-c2: #b89e14;
+		--diagram-c3: #e63d1f;
+		--diagram-c4: #25837e;
+		--diagram-c5: #50abe4;
+		--diagram-background-color: #333;
+	}
+
 	.bwp-chart-grid { stroke: rgb(255 255 255 / 0.25); }
-	.bwp-chart-scale, .bwp-chart-axes, .bwp-chart-serie-line { stroke: var(--default-color-dark); }
-	.bwp-chart-serie-line.bwp-dc1 { stroke: var(--diagram-c1-dark); }
-	.bwp-chart-serie-line.bwp-dc2 { stroke: var(--diagram-c2-dark); }
-	.bwp-chart-serie-line.bwp-dc3 { stroke: var(--diagram-c3-dark); }
-	.bwp-chart-serie-line.bwp-dc4 { stroke: var(--diagram-c4-dark); }
-	.bwp-chart-serie-line.bwp-dc5 { stroke: var(--diagram-c5-dark); }
-	.bwp-chart-error > div > span { color: var(--default-highlight-color-dark); }
 }

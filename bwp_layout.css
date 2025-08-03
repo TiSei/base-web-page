@@ -1,21 +1,16 @@
 :root {
-	--action-background-color-light: #DDD;
-	--action-background-color-dark: #444;
-	--action-background-color-hover-light: #BBB;
-	--action-background-color-hover-dark: #666;
-	--default-color-light: #000;
-	--default-color-dark: #FFF;
-	--default-background-color-light: #CCC;
-	--default-background-color-dark: #222;
-	--default-highlight-color-lighter: #FBA;
-	--default-highlight-color-light: #F00;
-	--default-highlight-color-darker: #711;
-	--default-highlight-color-dark: #B00;
+	--action-background-color: #DDD;
+	--action-background-color-hover: #BBB;
+	--default-color: #000;
+	--default-background-color: #CCC;
+	--default-background-color-container: #FFF;
+	--default-highlight-color-high: #FBA;
+	--default-highlight-color-higher: #F00;
 }
 
 body {
-	background-color: var(--default-background-color-light);
-	color: var(--default-color-light);
+	background-color: var(--default-background-color);
+	color: var(--default-color);
 	font-family: Tahoma;
 	margin: 0px;
 }
@@ -25,7 +20,7 @@ h1, h2, h3, h4 {
 }
 
 .bwp-core-container, .bwp-container {
-	background-color: var(--default-color-dark);
+	background-color: var(--default-background-color-container);
 	padding: 10px;
 }
 
@@ -129,13 +124,13 @@ button.bwp-top-jumper {
 }
 
 .bwp-btn:not(:disabled):hover {
-	background-color: var(--action-background-color-hover-light);
+	background-color: var(--action-background-color-hover);
 }
 
 /* form elements */
 .bwp-btn, .bwp-search-bar, input, textarea, select {
-	color: var(--default-color-light);
-	background-color: var(--action-background-color-light);
+	color: inherit;
+	background-color: var(--action-background-color);
 	font-family: Tahoma;
 }
 
@@ -175,29 +170,17 @@ button.bwp-top-jumper {
 }
 
 @media (prefers-color-scheme: dark) {
-	body {
-		background-color: var(--default-background-color-dark);
-		color: var(--default-color-dark);
-	}
-
-	.bwp-container, .bwp-core-container {
-		background: var(--default-color-light);
+	:root {
+		--action-background-color: #444;
+		--action-background-color-hover: #666;
+		--default-color: #FFF;
+		--default-background-color: #222;
+		--default-background-color-container: #000;
+		--default-highlight-color-high: #711;
+		--default-highlight-color-higher: #B00;
 	}
 
 	img {
 		filter: brightness(80%);
-	}
-
-	.bwp-btn, .bwp-search-bar, input, textarea, select {
-		background-color: var(--action-background-color-dark);
-		color: var(--default-color-dark);
-	}
-
-	.bwp-btn:not(:disabled):hover {
-		background-color: var(--action-background-color-hover-dark);
-	}
-
-	::placeholder {
-		color: var(--default-color-dark);
 	}
 }

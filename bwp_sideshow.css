@@ -29,8 +29,8 @@
 
 .bwp-sideshow-menu {
 	padding: 10px;
-	background-color: var(--default-background-color-light);
-	color: var(--default-color-light);
+	background-color: var(--default-background-color);
+	color: var(--default-color);
 	font-size: 16pt;
 	border: 3px dotted #999;
 	position: absolute;
@@ -43,11 +43,11 @@
 .bwp-sideshow-menu a {
 	line-height: 1.5;
 	text-decoration: none;
-	color: var(--default-color-light);
+	color: inherit;
 }
 
 .bwp-sideshow-menu a:hover {
-	color: var(--default-highlight-color-light);
+	color: var(--default-highlight-color-higher);
 }
 
 .bwp-sideshow-menu ol, .bwp-sideshow-error {
@@ -76,23 +76,5 @@
 }
 
 .bwp-sideshow-error {
-	color: var(--default-highlight-color-light);
-}
-
-@media (prefers-color-scheme: dark) {
-	.bwp-sideshow-menu, .bwp-sideshow-menu a {
-		color: var(--default-color-black);
-	}
-
-	.bwp-sideshow-menu a:hover {
-		color: var(--default-highlight-color-dark);
-	}
-
-	.bwp-sideshow-menu {
-		background-color: var(--default-background-color-dark);
-	}
-
-	.bwp-sideshow-error {
-		color: var(--default-highlight-color-dark);
-	}
+	color: var(--default-highlight-color-higher);
 }

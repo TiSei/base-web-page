@@ -3,13 +3,13 @@
 }
 
 .bwp-navbar a, .bwp-dropdown-context a, .bwp-dropbtn {
-	background-color: var(--action-background-color-light);
+	background-color: var(--action-background-color);
+	color: inherit;
 }
 
 .bwp-navbar a, .bwp-dropdown-context a {
 	text-decoration: none;
 	font-size: 16px;
-	color: var(--default-color-light);
 }
 
 .bwp-navbar a {
@@ -39,7 +39,7 @@
 }
 
 .bwp-navbar a:hover, .bwp-dropdown:hover .bwp-dropbtn {
-	background-color: var(--default-highlight-color-lighter);
+	background-color: var(--default-highlight-color-high);
 }
 
 .bwp-dropdown-content {
@@ -51,7 +51,7 @@
 }
 
 .bwp-dropdown-content a:hover {
-	background-color: var(--action-background-color-hover-light);
+	background-color: var(--action-background-color-hover);
 }
 
 .bwp-dropdown:hover .bwp-dropdown-content {
@@ -63,24 +63,5 @@
 	text-decoration: underline;
 	text-underline-offset: 4px;
 	text-decoration-thickness: 3px;
-	text-decoration-color: var(--default-highlight-color-light);
-}
-
-@media (prefers-color-scheme: dark) {
-	.bwp-navbar a, .bwp-dropdown-context a, .bwp-dropbtn {
-		background-color: var(--action-background-color-dark);
-		color: var(--default-color-dark);
-	}
-
-	.bwp-navbar a:hover, .bwp-dropdown:hover .bwp-dropbtn {
-		background-color: var(--default-highlight-color-darker);
-	}
-
-	.bwp-dropdown-content a:hover {
-		background-color: var(--action-background-color-hover-dark);
-	}
-
-	.bwp-navbar a.bwp-menu-active, .bwp-dropdown-context a.bwp-menu-active, .bwp-dropdown:has(a.bwp-menu-active) {
-		text-decoration-color: var(--default-highlight-color-dark);
-	}
+	text-decoration-color: var(--default-highlight-color-higher);
 }
