@@ -81,7 +81,7 @@ function SS_refreshMenu(box) {
 		box.appendChild(div);
 	} else
 		div.replaceChildren();
-	div.innerHTML = '<b>Sideshow - Menü</b><br/>';
+	div.innerHTML = '<b>Sideshow - Menu</b><br/>';
 	let id = box.getAttribute('bwp-sideshow-id');
 	if (box.hasAttribute('bwp-sideshow-data')) {
 		let data = JSON.parse(box.getAttribute('bwp-sideshow-data'));

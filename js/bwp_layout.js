@@ -27,7 +27,7 @@ function L_jumpToTop() {
 function L_addSearchBar() {
 	let inputs = document.getElementsByClassName('bwp-search-bar');
 	for (let input of inputs) {
-		input.placeholder = 'Suche';
+		input.placeholder = 'Search';
 		input.addEventListener('keydown', function(event) {
 			if (event.key === "Enter" || event.keyCode == '39') {
 				event.preventDefault();

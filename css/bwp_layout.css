@@ -80,6 +80,7 @@ ul {
 .bwp-header, .bwp-footer, .bwp-headline.bwp-sticky-headline {
 	position: sticky;
 	left: 0;
+	z-index: 5;
 }
 
 .bwp-header {
@@ -131,7 +132,7 @@ button.bwp-top-jumper {
 .bwp-btn, .bwp-search-bar, input, textarea, select {
 	color: inherit;
 	background-color: var(--action-background-color);
-	font-family: Tahoma;
+	font-family: inherit;
 }
 
 *:disabled {

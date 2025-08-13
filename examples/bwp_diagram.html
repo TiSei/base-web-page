@@ -1,13 +1,13 @@
 <html>
   <head>
-    <title>bwp-diagram</title>
+    <title>bwp-diagrams</title>
     <meta charset="UTF-8">
     <meta name="description" content="BWP - example page for diagrams">
     <meta name="author" content="TiSei">
     <meta name="keywords" content="BWP, diagram, WebDesign">
-    <link rel="stylesheet" href="bwp_layout.css">
-    <link rel="stylesheet" href="bwp_menu.css">
-    <link rel="stylesheet" href="bwp_diagram.css">
+    <link rel="stylesheet" href="../css/bwp_layout.css">
+    <link rel="stylesheet" href="../css/bwp_menu.css">
+    <link rel="stylesheet" href="../css/bwp_diagram.css">
     <style>
       .bwp-container h3 {
         margin-bottom: 5px;
@@ -38,9 +38,9 @@
       }
     </style>
   </head>
-  <script src="bwp_general.js"></script>
-  <script src="bwp_menu.js" defer></script>
-  <script src="bwp_diagram.js" defer></script>
+  <script src="../js/bwp_general.js"></script>
+  <script src="../js/bwp_menu.js" defer></script>
+  <script src="../js/bwp_diagram.js" defer></script>
   <body>
     <div class="bwp-onepage-layout-container">
       <div id="title" class="bwp-container">
@@ -120,8 +120,8 @@
       </div>
       <div id="api" class="bwp-container">
         <h3>Chart-API</h3>
-        <svg bwp-chart-type="linechart" bwp-chart-data-source="http://127.0.0.1:5000/test" />
-        <svg bwp-chart-type="linechart" bwp-chart-data-source="http://localhost/BWP/chart.json" bwp-chart-recall="10" />
+        <svg bwp-chart-type="linechart" bwp-chart-data-source="http://127.0.0.1:5000/test_data.json" bwp-chart-recall="10"/><br/>
+        only works on webservers or url-requests
       </div>
     </div>
   </body>

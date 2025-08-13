@@ -1,0 +1,9 @@
+{
+	// single Element <Label>:<Url>
+	"Google" : "https://www.google.com",
+	// dropdown Element <Label>:<Elements>
+	"Dropdown" : {
+		"Block 1" : "#block1",
+		"Block 2" : "#block2"
+	}
+}

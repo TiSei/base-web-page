@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>bwp-sidebar-layout</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="BWP - example page for sidebar layout">
+    <meta name="author" content="TiSei">
+    <meta name="keywords" content="BWP, layouts, WebDesign, sidebar, popup, searchbar">
+    <link rel="stylesheet" href="../css/bwp_layout.css">
+    <link rel="stylesheet" href="../css/bwp_menu.css">
+    <style>
+      .text-block {
+        margin: 15px;
+        width: calc(50% - 38px);
+      }
+      .bwp-search-bar { width: 100%; }
+    </style>
+  </head>
+  <script src="../js/bwp_general.js"></script>
+  <script src="../js/bwp_menu.js" defer></script>
+  <script src="../js/bwp_layout.js" defer></script>
+  <body>
+    <div class="bwp-sidebar-layout-container">
+      <div class="bwp-container bwp-header bwp-headline">
+        <h2 id="title">Example - Sidebar Layout</h2>
+        <div id="menu" class="bwp-navbar" bwp-menu-data="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
+      </div>
+      <div class="bwp-container bwp-sidebar">
+        <input class="bwp-search-bar" type="string"/>
+        <p>a primitive search, with the same function as F3</p>
+        <button class="bwp-btn" onClick="L_showPopup(document.getElementById('test_popup'))">Show Popup</button>
+        <p>empty popup, that can be used for dialogs or detail informations</p>
+      </div>
+      <div class="bwp-content">
+        <div id="block1" class="bwp-container">
+          <h3>Block 1</h3>
+          <div class="bwp-flex-container">
+            <div class="text-block">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+            <div class="text-block">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+            <div class="text-block">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+          </div>
+        </div>
+        <div id="block2" class="bwp-container">
+          <h3>Block 2</h3>
+          <div class="bwp-flex-container">
+            <div class="text-block">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+            <div class="text-block">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+            <div class="text-block">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bwp-container bwp-footer bwp-align-center">
+      Created by TiSei
+    </div>
+    <div class="bwp-popup bwp-container" id="test_popup">I'm a popup</div>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+[
+	// frame element [<Url>,<Label for Menu>,<Display Time in seconds>]
+	["bwp_onepage_layout.html","Onepage",4],
+	...
+]

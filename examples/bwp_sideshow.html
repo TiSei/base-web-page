@@ -5,24 +5,23 @@
     <meta name="description" content="BWP - example page for sideshow">
     <meta name="author" content="TiSei">
     <meta name="keywords" content="BWP, layouts, WebDesign, onepage, sideshow">
-    <link rel="stylesheet" href="bwp_layout.css">
-    <link rel="stylesheet" href="bwp_menu.css">
-    <link rel="stylesheet" href="bwp_sideshow.css">
+    <link rel="stylesheet" href="../css/bwp_layout.css">
+    <link rel="stylesheet" href="../css/bwp_menu.css">
+    <link rel="stylesheet" href="../css/bwp_sideshow.css">
     <style>
       .bwp-sideshow-container { width: calc(100% - 30px); height: 700px; margin: 15px; }
       .bwp-container h3 { margin-bottom: 5px; }
       td { padding: 5px; }
     </style>
   </head>
-  <script src="bwp_general.js"></script>
-  <script src="bwp_menu.js" defer></script>
-  <script src="bwp_sideshow.js" defer></script>
+  <script src="../js/bwp_general.js"></script>
+  <script src="../js/bwp_menu.js" defer></script>
+  <script src="../js/bwp_sideshow.js" defer></script>
   <body>
     <div class="bwp-onepage-layout-container">
       <div id="title" class="bwp-container">
-        <h2>Beispiel - SideShow</h2>
+        <h2>Exmaple - SideShow</h2>
       </div>
-      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{}"></div>
       <div class="bwp-container">
         <h3>SideShow Attributes</h3>
         <table>
@@ -33,10 +32,14 @@
           <tr><td>bwp-sideshow-recall</td><td>int value represents seconds until update data by calling apiagain<br/>only usable by bwp-sideshow-data-source</td></tr>
           <tr><td>bwp-sideshow-noMenu</td><td>disable sideshow menu to execute</td></tr>
         </table>
-	  </div>
+      </div>
       <div class="bwp-container">
         <h3>SideShow with IFrame</h3>
-        <div class="bwp-sideshow-container" bwp-sideshow-data-source="http://localhost/BWP/show1.json" bwp-sideshow-type="iframe"></div>
+        <div class="bwp-sideshow-container" bwp-sideshow-data="[[&quot;bwp_onepage_layout.html&quot;,&quot;Onepage&quot;,4],[&quot;bwp_sidebar_layout.html&quot;,&quot;Sidebar&quot;,4],[&quot;bwp_compact_layout.html&quot;,&quot;Compact&quot;,4]]" bwp-sideshow-type="iframe"></div>
+      </div>
+      <div class="bwp-container">
+        <h3>SideShow with IFrame (Error)</h3>
+        <div class="bwp-sideshow-container" bwp-sideshow-data-source="http://0.0.0.0:5000" bwp-sideshow-type="iframe"></div>
       </div>
       <!--
       <div class="bwp-container">
