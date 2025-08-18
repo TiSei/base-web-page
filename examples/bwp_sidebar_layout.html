@@ -13,6 +13,14 @@
         width: calc(50% - 38px);
       }
       .bwp-search-bar { width: 100%; }
+      .bwp-sidebar > img {
+        width: 100%;
+      }
+      h2 > img {
+        height: 3rem;
+        vertical-align: middle;
+        margin-right: 0.8em;
+      }
     </style>
   </head>
   <script src="../js/bwp_general.js"></script>
@@ -21,10 +29,12 @@
   <body>
     <div class="bwp-sidebar-layout-container">
       <div class="bwp-container bwp-header bwp-headline">
-        <h2 id="title">Example - Sidebar Layout</h2>
+        <h2 id="title"><img src="../logos/bwp-logo.png"/>Example - Sidebar Layout</h2>
         <div id="menu" class="bwp-navbar" bwp-menu-data="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
       </div>
       <div class="bwp-container bwp-sidebar">
+        <img src="../logos/bwp-logo.png" class="bwp-image-zoom"/>
+        <p>image, that can be enlarged via popup</p>
         <input class="bwp-search-bar" type="string"/>
         <p>a primitive search, with the same function as F3</p>
         <button class="bwp-btn" onClick="L_showPopup(document.getElementById('test_popup'))">Show Popup</button>

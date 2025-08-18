@@ -1,3 +1,4 @@
+![bwp logo](/logos/bwp-logo.png)
 # Base Web Page
 
 small collection of useful javascripts and stylesheets to display simple layouts (dark mode support), dynamic menu, interactive views like sideshows and diagrams with API calls in the background
@@ -35,10 +36,11 @@ The menu is created dynamically at runtime by the browser, with the data provide
 
 ### Jumper 6 Co
 
-By default, the layout script always generates a simple button that jumps back to the top of the page
-If no CMS is integrated, a simple search field for the current page can be created using input.bwp-search-bar
-
-Also a lightweight popup system for dialogs and detailed views is supported
+supported features:
+- **TopJumper**: By default, the layout script always generates a simple button that jumps back to the top of the page
+- **simple search bar**: If no CMS is integrated, a simple search field for the current page can be created using input.bwp-search-bar, similar functionality to F3
+- **popups**: a lightweight popup system for dialogs and detailed views
+- **image zoom**: open enlarged image in popup
 
 > [!TIP]
 > For more information, look at [examples/bwp_sidebar_layout.html](examples/bwp_sidebar_layout.html)
@@ -62,4 +64,4 @@ An lightweight diagrams module for interactive presenting data at runtime is int
 - [ ] add api-control-panel for diagrams to switch APIs at runtime
 - [ ] and new diagram type to show basic numbers
 - [ ] add helpful classes to suppport new container layouts, f.e. Image-Container
-- [ ] integrate new function to display more details for images using the popup
+- [x] integrate new function to display more details for images using the popup
