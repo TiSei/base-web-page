@@ -34,13 +34,12 @@ three layout styles are supported yet:
 
 The menu is created dynamically at runtime by the browser, with the data provided as a JSON-encoded string in the HTML or retrieved via an API call. Highlighting the current page/entry is done via URL matching.
 
-### Jumper 6 Co
+### Jumper, Popups 6 Co
 
-supported features:
 - **TopJumper**: By default, the layout script always generates a simple button that jumps back to the top of the page
 - **simple search bar**: If no CMS is integrated, a simple search field for the current page can be created using input.bwp-search-bar, similar functionality to F3
-- **popups**: a lightweight popup system for dialogs and detailed views
-- **image zoom**: open enlarged image in popup
+- **popups**: A lightweight popup system for dialogs and detailed views
+- **image zoom**: Open enlarged image in popup
 
 > [!TIP]
 > For more information, look at [examples/bwp_sidebar_layout.html](examples/bwp_sidebar_layout.html)

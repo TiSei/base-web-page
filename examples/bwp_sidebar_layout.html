@@ -6,7 +6,6 @@
     <meta name="author" content="TiSei">
     <meta name="keywords" content="BWP, layouts, WebDesign, sidebar, popup, searchbar">
     <link rel="stylesheet" href="../css/bwp_layout.css">
-    <link rel="stylesheet" href="../css/bwp_menu.css">
     <style>
       .text-block {
         margin: 15px;
@@ -24,20 +23,19 @@
     </style>
   </head>
   <script src="../js/bwp_general.js"></script>
-  <script src="../js/bwp_menu.js" defer></script>
   <script src="../js/bwp_layout.js" defer></script>
   <body>
     <div class="bwp-sidebar-layout-container">
       <div class="bwp-container bwp-header bwp-headline">
         <h2 id="title"><img src="../logos/bwp-logo.png"/>Example - Sidebar Layout</h2>
-        <div id="menu" class="bwp-navbar" bwp-menu-data="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
+        <div id="menu" class="bwp-navbar" data-bwp-menu-plain="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
       </div>
       <div class="bwp-container bwp-sidebar">
         <img src="../logos/bwp-logo.png" class="bwp-image-zoom"/>
         <p>image, that can be enlarged via popup</p>
         <input class="bwp-search-bar" type="string"/>
         <p>a primitive search, with the same function as F3</p>
-        <button class="bwp-btn" onClick="L_showPopup(document.getElementById('test_popup'))">Show Popup</button>
+        <button class="bwp-btn" onClick="document.getElementById('test_popup')._popup.show()">Show Popup</button>
         <p>empty popup, that can be used for dialogs or detail informations</p>
       </div>
       <div class="bwp-content">

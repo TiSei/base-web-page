@@ -6,7 +6,6 @@
     <meta name="author" content="TiSei">
     <meta name="keywords" content="BWP, diagram, WebDesign">
     <link rel="stylesheet" href="../css/bwp_layout.css">
-    <link rel="stylesheet" href="../css/bwp_menu.css">
     <link rel="stylesheet" href="../css/bwp_diagram.css">
     <style>
       .bwp-container h3 {
@@ -44,14 +43,14 @@
     </style>
   </head>
   <script src="../js/bwp_general.js"></script>
-  <script src="../js/bwp_menu.js" defer></script>
+  <script src="../js/bwp_layout.js" defer></script>
   <script src="../js/bwp_diagram.js" defer></script>
   <body>
     <div class="bwp-onepage-layout-container">
       <div id="title" class="bwp-container">
         <h2><img src="../logos/bwp-logo.png"/>Example - Diagrams<h2>
       </div>
-      <div id="menu" class="bwp-container bwp-navbar" bwp-menu-data="{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;,&quot;Columncharts&quot;:&quot;#columncharts&quot;,&quot;Linecharts&quot;:&quot;#linecharts&quot;}"></div>
+      <div id="menu" class="bwp-container bwp-navbar" data-bwp-menu-plain="{&quot;Attributes&quot;:&quot;#json_values&quot;,&quot;Piecharts&quot;:&quot;#piecharts&quot;,&quot;Columncharts&quot;:&quot;#columncharts&quot;,&quot;Linecharts&quot;:&quot;#linecharts&quot;}"></div>
       <div id="json_values" class="bwp-container">
         <h3>Charts - Attributes</h3>
         <table>
