@@ -1,56 +1,78 @@
 <html>
   <head>
-    <title>bwp-sideshow</title>
+    <title>bwp-slideshow</title>
     <meta charset="UTF-8">
-    <meta name="description" content="BWP - example page for sideshow">
+    <meta name="description" content="BWP - example page for slideshow">
     <meta name="author" content="TiSei">
-    <meta name="keywords" content="BWP, layouts, WebDesign, onepage, sideshow">
+    <meta name="keywords" content="BWP, layouts, WebDesign, onepage, slideshow">
     <link rel="stylesheet" href="../css/bwp_layout.css">
-    <link rel="stylesheet" href="../css/bwp_sideshow.css">
     <style>
-      .bwp-sideshow-container { width: calc(100% - 30px); height: 700px; margin: 15px; }
-      .bwp-container h3 { margin-bottom: 5px; }
-      td { padding: 5px; }
       h2 > img {
         height: 3rem;
         vertical-align: middle;
         margin-right: 0.8em;
       }
+      h3 { margin-bottom: 10px; }
+      td { padding: 5px; }
+      .opt {
+        margin: 5px;
+        font-style: italic;
+      }
+      .bwp-slideshow iframe {
+        width: 80%;
+        height: 100%;
+      }
+      #block1 .bwp-slideshow {
+        width: calc(50% - 20px);
+        margin: 10px;
+        max-width: 800px;
+      }
     </style>
   </head>
   <script src="../js/bwp_general.js"></script>
   <script src="../js/bwp_layout.js" defer></script>
-  <script src="../js/bwp_sideshow.js" defer></script>
   <body>
     <div class="bwp-onepage-layout-container">
       <div id="title" class="bwp-container">
-        <h2><img src="../logos/bwp-logo.png"/>Example - SideShow</h2>
+        <h2><img src="../logos/bwp-logo.png"/>Example - SlideShow</h2>
       </div>
-      <div class="bwp-container">
-        <h3>SideShow Attributes</h3>
+      <div id="attributes" class="bwp-container">
+        <h3>Attributes</h3>
         <table>
           <tr><th>tag</th><th>description</th></tr>
-          <tr><td>bwp-sideshow-type</td><td>select source type, in time supported:<ul><li>iframe, for websites and pdf</li></ul></td></tr>
-          <tr><td>bwp-sideshow-data</td><td>json-coded sideshow data, static definition</td></tr>
-          <tr><td>bwp-sideshow-data-source</td><td>api url, to request sideshow data dinamic<br/>overwrites bwp-sideshow-data</td></tr>
-          <tr><td>bwp-sideshow-recall</td><td>int value represents seconds until update data by calling apiagain<br/>only usable by bwp-sideshow-data-source</td></tr>
-          <tr><td>bwp-sideshow-noMenu</td><td>disable sideshow menu to execute</td></tr>
+          <tr><td>data-bwp-autoplay<p class="opt">optional</p></td><td>int value represents the seconds until the next slide is automatically displayed.</td></tr>
+          <tr><td>data-bwp-source<p class="opt">optional</p></td><td>API URL to request dynamic sideshow data<br/>If not set, the slides must be defined manually</td></tr>
+          <tr><td>data-bwp-slide-type<p class="opt">optional</p></td><td>defines the HTML tags on which the crawled slides are generated<br/>supported:<ul><li>iframe (default)</li><li>img</li></td></tr>
+          <tr><td>data-bwp-recall<p class="opt">optional</p></td><td>int value represents the minutes until the data is updated by calling the API again<br/>only usable by data-bwp-source</td></tr>
         </table>
+        <p>Example:<br/>
+        &lt;div class="bwp-slideshow" data-bwp-autoplay="10" data-bwp-source="http://127.0.0.1:8000/examples/sideshow_data.json.example" data-bwp-recall="1" data-bwp-slide-type="img"&gt;<br/>
+        Creates a slideshow that retrieves a JSON-encoded list of image URLs from the API once per minute and displays them as images, alternating every 10 seconds.
+        </p>
       </div>
-      <div class="bwp-container">
-        <h3>SideShow with IFrame</h3>
-        <div class="bwp-sideshow-container" bwp-sideshow-data="[[&quot;bwp_onepage_layout.html&quot;,&quot;Onepage&quot;,4],[&quot;bwp_sidebar_layout.html&quot;,&quot;Sidebar&quot;,4],[&quot;bwp_compact_layout.html&quot;,&quot;Compact&quot;,4]]" bwp-sideshow-type="iframe"></div>
+      <div id="block1" class="bwp-container">
+        <h3>Slideshow with IMG</h3>
+        <div class="bwp-flex-container">
+          <div class="bwp-slideshow" data-bwp-autoplay="5">
+            <div class="bwp-slides">
+              <img src="../logos/bwp-logo.png"/>
+              <img src="../logos/bwp-logo.png"/>
+              <img src="../logos/bwp-logo.png"/>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="bwp-container">
-        <h3>SideShow with IFrame (Error)</h3>
-        <div class="bwp-sideshow-container" bwp-sideshow-data-source="http://0.0.0.0:5000" bwp-sideshow-type="iframe"></div>
+      <div id="block2" class="bwp-container">
+        <h3>Slideshow with IFrame</h3>
+        <div class="bwp-slideshow" data-bwp-autoplay="10">
+          <div class="bwp-slides">
+            <iframe src="./bwp_onepage_layout.html"></iframe>
+            <iframe src="./bwp_sidebar_layout.html"></iframe>
+            <iframe src="./bwp_compact_layout.html"></iframe>
+          </div>
+        </div>
+        <p>For crawling data dynamic at runtime, see <a href="#attributes">Attributes</a></p>
       </div>
-      <!--
-      <div class="bwp-container">
-        <h3>SideShow with Img</h3>
-        <div class="bwp-sideshow-container" bwp-sideshow-data="{}" bwp-sideshow-data-source="http://localhost/BWP/show1.json" bwp-sideshow-type="img" bwp-sideshow-recall bwp-sideshow-noMenu></div>
-      </div>
-      -->
     </div>
   </body>
 </html>

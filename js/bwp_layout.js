@@ -74,7 +74,7 @@ class BWP_Menu {
 			this.navbar.appendChild(data[key].constructor == Object ? this.makeDropdownMenuItem(key, data[key]) : this.makeMenuItem(key, data[key]));
 		}
 		if (this.activeHref !== '')
-			document.querySelector('#menu a[href="'+this.activeHref+'"]').classList.add('bwp-menu-active');
+			document.querySelector('#menu a[href="'+this.activeHref+'"]').classList.add('bwp-is-active');
 	}
 	makeMenuItem(label, href) {
 		if (!href.startsWith('#') && window.location.pathname.includes(href) && href.length > this.activeHref.length)
@@ -93,6 +93,95 @@ class BWP_Menu {
 	}
 }
 
+class BWP_SlideShow {
+	constructor(root) {
+		this.root = root;
+		this.index = 0;
+		this.autoplay = ("bwpAutoplay" in root.dataset);
+		if ("bwpSource" in root.dataset) {
+			const lambda = () => universalFetchAsync({
+				url:root.dataset.bwpSource,
+				responseType: 'json',
+				onSuccess: data => { this.updateSlides(data); },
+				onError: err => { this.updateSlides([]); }
+			});
+			if ("bwpRecall" in root.dataset) {
+				setInterval(() => lambda(), parseInt(this.root.dataset.bwpRecall) * 60 * 1000);
+			}
+			lambda();
+		} else {
+			this.updateView()
+		}
+	}
+	updateSlides(data) {
+		this.root.innerHTML = '';
+		let div_slides = createElement('div',['bwp-slides']);
+		this.root.appendChild(div_slides);
+		for (let url of data) {
+			div_slides.appendChild(createElement((('bwpSlideType' in this.root.dataset) ? this.root.dataset.bwpSlideType : 'iframe'),[],{'src':url}));
+		}
+		this.updateView();
+	}
+	updateView() {
+		this.stopAutoplay(true);
+		this.slides = Array.from(this.root.querySelectorAll('.bwp-slides > *'));
+		this.dotsWrap = createElement('div',['bwp-slideshow-dots']);
+		this.root.appendChild(this.dotsWrap);
+		this.dots = this.slides.map((_, i) => {
+			const dot = createElement('button',['bwp-slideshow-dot']);
+			dot.addEventListener("click", () => this.show(i));
+			this.dotsWrap.appendChild(dot);
+			return dot;
+		});
+		if (this.slides.length > 1) {
+			let buttonWrap = createElement('div',['bwp-slideshow-controls']);
+			let prevBtn = createElement('button',['bwp-slideshow-prev','bwp-slideshow-btn'],{},'<');
+			prevBtn.addEventListener("click", () => this.prev());
+			buttonWrap.appendChild(prevBtn);
+			if (this.autoplay) {
+				let centerButtonWrap = createElement('div',['bwp-sideshow-center-controls']);
+				this.playBtn = createElement('button',['bwp-slideshow-play','bwp-slideshow-btn','bwp-none'],{},'&#9658;');
+				this.playBtn.addEventListener("click", () => this.startAutoplay());
+				centerButtonWrap.appendChild(this.playBtn);
+				this.stopBtn = createElement('button',['bwp-slideshow-stop','bwp-slideshow-btn'],{},'&#10073;&#10073;');
+				this.stopBtn.addEventListener("click", () => this.stopAutoplay());
+				centerButtonWrap.appendChild(this.stopBtn);
+				buttonWrap.appendChild(centerButtonWrap);
+				this.interval = parseInt(this.root.dataset.bwpAutoplay) * 1000;
+				this.startAutoplay();
+			}
+			let nextBtn = createElement('button',['bwp-slideshow-next','bwp-slideshow-btn'],{},'>');
+			nextBtn.addEventListener("click", () => this.next());
+			buttonWrap.appendChild(nextBtn);
+			this.root.appendChild(buttonWrap);
+		}
+		this.show(this.index);
+	}
+	show(i) {
+		this.index = (i + this.slides.length) % this.slides.length;
+		this.slides.forEach((el, j) => el.classList.toggle("bwp-is-active", j === this.index));
+		this.dots.forEach((d, j) => d.classList.toggle("bwp-is-active", j === this.index));
+	}
+	next() { this.show(this.index + 1); }
+	prev() { this.show(this.index - 1); }
+	startAutoplay() {
+		this.stopAutoplay(true);
+		this.playBtn.classList.add('bwp-none');
+		this.stopBtn.classList.remove('bwp-none');
+		this.timer = setInterval(() => this.next(), this.interval);
+	}
+	stopAutoplay(NoBtnChange = false) {
+		if (this.timer) {
+			clearInterval(this.timer);
+			this.timer = null;
+		}
+		if (!NoBtnChange) {
+			this.playBtn.classList.remove('bwp-none');
+			this.stopBtn.classList.add('bwp-none');
+		}
+	}
+}
+
 function L_watchDOMManipulations() {
 	const observer = new MutationObserver(mutations => {
 		for (const mutation of mutations) {
@@ -102,6 +191,7 @@ function L_watchDOMManipulations() {
 					'.bwp-popup': BWP_Popup,
 					'.bwp-search-bar': BWP_SearchBar,
 					'.bwp-navbar': BWP_Menu,
+					'.bwp-slideshow': BWP_SlideShow,
 				};
 				for (const [selector, Widget] of Object.entries(widgetMap)) {
 					const target = node.matches(selector) ? node : node.querySelector(selector);
@@ -129,6 +219,7 @@ function runLayoutApi() {
 	document.querySelectorAll(".bwp-popup").forEach(el => new BWP_Popup(el));
 	document.querySelectorAll(".bwp-search-bar").forEach(el => new BWP_SearchBar(el));
 	document.querySelectorAll(".bwp-navbar").forEach(el => new BWP_Menu(el));
+	document.querySelectorAll(".bwp-slideshow").forEach(el => new BWP_SlideShow(el));
 	L_watchDOMManipulations();
 }
 

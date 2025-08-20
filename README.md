@@ -10,7 +10,7 @@ To use specific functions, for example only sideshow, at least bwp_general.js an
 > [!IMPORTANT]
 > every javascript, excepted bwp_general.js, must be integrate with the **defer**-attribute, to run correctly f.e.<br>
 >```
-><script src="../js/bwp_menu.js" defer></script>
+><script src="../js/bwp_layout.js" defer></script>
 >```
 
 A further development as one universal script is planned
@@ -26,6 +26,15 @@ three layout styles are supported yet:
 
 > [!TIP]
 > For a better idea, it is worth taking a look at the [examples/](examples/)
+
+four container layouts are supported yet:
+- **bwp-container**: basic container
+- **bwp-core-container**: basic container without margin
+- **bwp-flex-container**: basic container with flex-grid and wrap
+- **bwp-image-container**: split layout (image left, content right)
+
+> [!TIP]
+> For more information, look at [examples/bwp_sidebar_layout.html](examples/bwp_sidebar_layout.html)
 
 > [!NOTE]
 > static and always shown elements like header and footer are also supported
@@ -44,9 +53,9 @@ The menu is created dynamically at runtime by the browser, with the data provide
 > [!TIP]
 > For more information, look at [examples/bwp_sidebar_layout.html](examples/bwp_sidebar_layout.html)
 
-## Sideshow
+## Slideshow
 
-An lightweight sideshow module for presenting diashows, documents and other webpages is integrated and supports external configuration by API call
+An lightweight slideshow module for presenting diashows, documents and other webpages or images is integrated and supports external configuration by API call
 
 > [!TIP]
 > For more information, look at [examples/bwp_sideshow.html](examples/bwp_sideshow.html)
@@ -62,5 +71,6 @@ An lightweight diagrams module for interactive presenting data at runtime is int
 
 - [ ] add api-control-panel for diagrams to switch APIs at runtime
 - [ ] and new diagram type to show basic numbers
-- [ ] add helpful classes to suppport new container layouts, f.e. Image-Container
+- [x] add helpful classes to suppport new container layouts, f.e. Image-Container
 - [x] integrate new function to display more details for images using the popup
+- [x] integrate new function to display many images in one container

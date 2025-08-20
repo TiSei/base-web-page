@@ -7,19 +7,15 @@
     <meta name="keywords" content="BWP, layouts, WebDesign, sidebar, popup, searchbar">
     <link rel="stylesheet" href="../css/bwp_layout.css">
     <style>
-      .text-block {
-        margin: 15px;
-        width: calc(50% - 38px);
-      }
-      .bwp-search-bar { width: 100%; }
-      .bwp-sidebar > img {
-        width: 100%;
-      }
       h2 > img {
         height: 3rem;
         vertical-align: middle;
         margin-right: 0.8em;
       }
+      .text-block, .bwp-image-container { margin: 15px; }
+      .bwp-flex-container > .text-block { width: calc(50% - 38px); }
+      .bwp-search-bar, .bwp-sidebar > img { width: 100%; }
+      .bwp-image-container > img { height: 3rem; }
     </style>
   </head>
   <script src="../js/bwp_general.js"></script>
@@ -28,7 +24,7 @@
     <div class="bwp-sidebar-layout-container">
       <div class="bwp-container bwp-header bwp-headline">
         <h2 id="title"><img src="../logos/bwp-logo.png"/>Example - Sidebar Layout</h2>
-        <div id="menu" class="bwp-navbar" data-bwp-menu-plain="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
+        <div id="menu" class="bwp-navbar" data-bwp-menu-plain="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;,&quot;Block 3&quot;:&quot;#block3&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
       </div>
       <div class="bwp-container bwp-sidebar">
         <img src="../logos/bwp-logo.png" class="bwp-image-zoom"/>
@@ -40,8 +36,8 @@
       </div>
       <div class="bwp-content">
         <div id="block1" class="bwp-container">
-          <h3>Block 1</h3>
-          <div class="bwp-flex-container">
+          <h3>Block 1 - bwp-core-container</h3>
+          <div class="bwp-core-container">
             <div class="text-block">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
             </div>
@@ -54,7 +50,7 @@
           </div>
         </div>
         <div id="block2" class="bwp-container">
-          <h3>Block 2</h3>
+          <h3>Block 2 - bwp-flex-container</h3>
           <div class="bwp-flex-container">
             <div class="text-block">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
@@ -64,6 +60,15 @@
             </div>
             <div class="text-block">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+            </div>
+          </div>
+        </div>
+        <div id="block3" class="bwp-container">
+          <h3>Block 3 - bwp-image-container</h3>
+          <div class="bwp-image-container">
+            <img src="../logos/bwp-logo.png"/>
+            <div class="bwp-image-content">
+              <p>Hier könnte Text zum Bild stehen</p>
             </div>
           </div>
         </div>

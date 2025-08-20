@@ -25,12 +25,14 @@ function displayConfirmAlert(msg) {
 	return confirm(msg);
 }
 
-async function universalFetchAsync({url, responseType = 'text', onSuccess = () => {}, onError = () => {}}) {
+async function universalFetchAsync({url, responseType = 'text', onSuccess = () => {}, onError = () => {}, ignoreNotModified = false, noCache = false}) {
 	try {
-		const response = await fetch(url);
+		const response = await fetch(url, {cache: (noCache ? 'no-store' : 'default')});
 		if (!response.ok) throw new Error('HTTP error ' + response.status);
-		const data = responseType === 'json' ? await response.json() : await response.text();
-		onSuccess(data);
+		if (response.status !== 304 || ignoreNotModified) {
+			const data = responseType === 'json' ? await response.json() : await response.text();
+			onSuccess(data);
+		}
 	} catch (err) {
 		onError(err);
 	}
