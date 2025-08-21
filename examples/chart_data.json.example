@@ -1,3 +1,11 @@
+// Piechart/Columnchart
+{
+	// Dataset <Label for Legend>:<Data Value>
+	"Block A": 12.5,
+	...
+}
+
+// Linechart
 {
 	// Dataset <Label for Legend>:<Data Points>
 	"Block-A":[

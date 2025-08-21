@@ -20,22 +20,22 @@
 	font-size: 18px;
 }
 
-.bwp-chart[bwp-chart-hover] .bwp-chart-piece:hover .bwp-chart-piece-label,
-.bwp-chart[bwp-chart-labels]:not(.bwp-chart[bwp-chart-hover]) .bwp-chart-piece-label,
-.bwp-chart[bwp-chart-hover] .bwp-chart-serie:hover .bwp-chart-serie-labels,
-.bwp-chart[bwp-chart-labels]:not(.bwp-chart[bwp-chart-hover]) .bwp-chart-serie-labels
+.bwp-chart-hoverable .bwp-chart-piece:hover .bwp-chart-piece-label,
+.bwp-chart-has-labels:not(.bwp-chart-hoverable) .bwp-chart-piece-label,
+.bwp-chart-hoverable .bwp-chart-serie:hover .bwp-chart-serie-labels,
+.bwp-chart-has-labels:not(.bwp-chart-hoverable) .bwp-chart-serie-labels
 {
 	opacity: 1;
 }
 
-.bwp-chart[bwp-chart-hover] .bwp-chart-piece:hover,
-.bwp-chart[bwp-chart-hover] .bwp-chart-serie:hover
+.bwp-chart-hoverable .bwp-chart-piece:hover,
+.bwp-chart-hoverable .bwp-chart-serie:hover
 {
 	filter: brightness(110%);
 }
 
-.bwp-chart[bwp-chart-hover] .bwp-chart-piece:hover .bwp-chart-legend-text,
-.bwp-chart[bwp-chart-hover] .bwp-chart-serie:hover .bwp-chart-legend-text
+.bwp-chart-hoverable .bwp-chart-piece:hover .bwp-chart-legend-text,
+.bwp-chart-hoverable .bwp-chart-serie:hover .bwp-chart-legend-text
 {
 	font-weight: 900;
 }
@@ -57,8 +57,8 @@
 	fill: var(--default-color);
 }
 
-.bwp-chart:not(.bwp-chart[bwp-chart-labels]) .bwp-chart-piece-label,
-.bwp-chart:not(.bwp-chart[bwp-chart-labels]) .bwp-chart-serie-labels
+.bwp-chart:not(.bwp-chart-has-labels) .bwp-chart-piece-label,
+.bwp-chart:not(.bwp-chart-has-labels) .bwp-chart-serie-labels
 {
 	display: none;
 }
