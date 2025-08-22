@@ -40,28 +40,35 @@
   <script src="../js/bwp_core.js"></script>
   <script src="../js/bwp_layout.js" defer></script>
   <script src="../js/bwp_diagram.js" defer></script>
+  <script>
+    BwpDataSourceRegistry.register('menu', {
+      inline: {'Attribute':'#attributes','Classes':'#classes','Sizing':'#sizing','Types':{'Piecharts':'#piecharts','Columncharts':'#columncharts','Linecharts':'#linecharts'},'API':'#api'},
+    });
+    BwpDataSourceRegistry.register('pie1', { inline: {'Block-A':10,'Block-B':40.5,'Block-C':15.7,'Block-D':28}, });
+    BwpDataSourceRegistry.register('pie2', { inline: {'Block-A':15,'Block-B':20.9,'Block-C':21,'Block-D':17.9,'Block-E':12,'Block-F':20,'Block-G':10}, });
+    BwpDataSourceRegistry.register('col1', { inline: {'Block-A':10,'Block-B':40.5,'Block-C':15.7,'Block-D':28,'Block-E':5.8}, });
+    BwpDataSourceRegistry.register('col2', { inline: {'Block-A':15,'Block-B':20.9,'Block-C':21,'Block-D':17.9,'Block-E':12}, });
+    BwpDataSourceRegistry.register('line1', { inline: {'Block-A':[[1,1],[2,1.3],[3,2.4],[4,1.2]],'Block-B':[[-1,4],[-0.5,1.3],[0,-0.2],[0.5,1]]}, });
+    BwpDataSourceRegistry.register('line2', { inline: {'Block-A':[[1,1],[2,1.3],[3,2.4],[4,1.2]],'Block-B':[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}, });
+    BwpDataSourceRegistry.register('api', {
+      url: 'http://127.0.0.1:8000/examples/test_data.json',
+      recall: 10
+    });
+  </script>
   <body>
     <div class="bwp-onepage-layout-container">
       <div id="title" class="bwp-container">
         <h2><img src="../logos/bwp-logo.png"/>Example - Diagrams<h2>
       </div>
-      <div id="menu" class="bwp-container bwp-navbar" data-bwp-menu-plain="{&quot;Attributes&quot;:&quot;#attributes&quot;,&quot;Classes&quot;:&quot;#classes&quot;,&quot;Sizing&quot;:&quot;#sizing&quot;,&quot;Types&quot;:{&quot;Piecharts&quot;:&quot;#piecharts&quot;,&quot;Columncharts&quot;:&quot;#columncharts&quot;,&quot;Linecharts&quot;:&quot;#linecharts&quot;},&quot;API&quot;:&quot;#api&quot;}"></div>
+      <div id="menu" class="bwp-container bwp-navbar" data-bwp-source="menu"></div>
       <div id="attributes" class="bwp-container bwp-flex-container">
         <div class="table-box">
           <h3>Charts - Attributes</h3>
           <table>
             <tr><th>tag</th><th>description</th></tr>
             <tr><td>data-bwp-type</td><td>select charttype, in time supported:<ul><li>piechart</li><li>columnchart</li><li>linechart</li></ul></td></tr>
+            <tr><td>data-bwp-source</td><td>unique name of BwpDataSource to use</td></tr>
             <tr><td>data-bwp-legend-width<p class="opt">optional</p></td><td>force space of legend<br/>default, if not set: 200</td></tr>
-          </table>
-        </div>
-        <div class="table-box">
-          <h3>Data - Attributes</h3>
-          <table>
-            <tr><th>tag</th><th>description</th></tr>
-            <tr><td>data-bwp-data<p class="opt">optional</p></td><td>json-coded values to display</td></tr>
-            <tr><td>data-bwp-source<p class="opt">optional</p></td><td>url to call API for dynamic values<br/>default, called once by loading script</td></tr>
-            <tr><td>data-bwp-recall<p class="opt">optional</p></td><td>seconds until repeats call API</td></tr>
           </table>
         </div>
         <div class="table-box">
@@ -100,40 +107,40 @@
       </div>
       <div id="piecharts" class="bwp-container">
         <h3>Piecharts</h3>
-        <svg class="bwp-chart" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28}"/>
-        <svg class="bwp-chart bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:8.2,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}"/>
-        <svg class="bwp-chart bwp-chart-hoverable" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:20.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
-        <svg class="bwp-chart bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:10.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}"/>
-        <svg class="bwp-chart bwp-chart-has-labels" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}" data-bwp-legend-width="100"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9,&quot;Block-F&quot;:18,&quot;Block-G&quot;:5.5}" data-bwp-legend-width="100"/>
+        <svg class="bwp-chart" data-bwp-type="piechart" data-bwp-source="pie1"/>
+        <svg class="bwp-chart bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-source="pie1"/>
+        <svg class="bwp-chart bwp-chart-hoverable" data-bwp-type="piechart" data-bwp-source="pie1"/>
+        <svg class="bwp-chart bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-source="pie1"/>
+        <svg class="bwp-chart bwp-chart-has-labels" data-bwp-type="piechart" data-bwp-source="pie2"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-source="pie2" data-bwp-legend-width="100"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable" data-bwp-type="piechart" data-bwp-source="pie2"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="piechart" data-bwp-source="pie2" data-bwp-legend-width="100"/>
       </div>
       <div id="columncharts" class="bwp-container">
         <h3>Columncharts</h3>
-        <svg class="bwp-chart" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
-        <svg class="bwp-chart bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}"/>
-        <svg class="bwp-chart bwp-chart-hoverable" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:10,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:5.8}"/>
-        <svg class="bwp-chart bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:8.2,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:40.9,&quot;Block-E&quot;:9}"/>
-        <svg class="bwp-chart bwp-chart-has-labels" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:25.6,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:36.2}" data-bwp-baseline="10"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" data-bwp-baseline="10"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:25.6,&quot;Block-B&quot;:40.5,&quot;Block-C&quot;:15.7,&quot;Block-D&quot;:28,&quot;Block-E&quot;:36.2}" data-bwp-baseline="10"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-data="{&quot;Block-A&quot;:15,&quot;Block-B&quot;:20.9,&quot;Block-C&quot;:21,&quot;Block-D&quot;:17.9,&quot;Block-E&quot;:12}" data-bwp-x-width="200" data-bwp-y-width="200" data-bwp-legend-width="250"/>
+        <svg class="bwp-chart" data-bwp-type="columnchart" data-bwp-source="col1"/>
+        <svg class="bwp-chart bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-source="col1"/>
+        <svg class="bwp-chart bwp-chart-hoverable" data-bwp-type="columnchart" data-bwp-source="col1"/>
+        <svg class="bwp-chart bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-source="col1"/>
+        <svg class="bwp-chart bwp-chart-has-labels" data-bwp-type="columnchart" data-bwp-source="col2" data-bwp-baseline="10"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-source="col2" data-bwp-baseline="10"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable" data-bwp-type="columnchart" data-bwp-source="col2" data-bwp-baseline="10"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="columnchart" data-bwp-source="col2"data-bwp-x-width="200" data-bwp-y-width="200" data-bwp-legend-width="250"/>
       </div>
       <div id="linecharts" class="bwp-container">
         <h3>Linecharts</h3>
-        <svg class="bwp-chart" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}"/>
-        <svg class="bwp-chart bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}"/>
-        <svg class="bwp-chart bwp-chart-hoverable" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[-1,4],[-0.5,1.3],[0,-0.2],[0.5,1]]}"/>
-        <svg class="bwp-chart bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}"/>
-        <svg class="bwp-chart bwp-chart-has-labels" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" data-bwp-legend-width="100"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}"/>
-        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-data="{&quot;Block-A&quot;:[[1,1],[2,1.3],[3,2.4],[4,1.2]],&quot;Block-B&quot;:[[1,4],[1.5,3.3],[2,2.2],[2.5,3]]}" data-bwp-legend-width="100"/>
+        <svg class="bwp-chart" data-bwp-type="linechart" data-bwp-source="line1"/>
+        <svg class="bwp-chart bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-source="line1"/>
+        <svg class="bwp-chart bwp-chart-hoverable" data-bwp-type="linechart" data-bwp-source="line1"/>
+        <svg class="bwp-chart bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-source="line1"/>
+        <svg class="bwp-chart bwp-chart-has-labels" data-bwp-type="linechart" data-bwp-source="line2"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-source="line2" data-bwp-legend-width="100"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable" data-bwp-type="linechart" data-bwp-source="line2"/>
+        <svg class="bwp-chart bwp-chart-has-labels bwp-chart-hoverable bwp-chart-has-legend" data-bwp-type="linechart" data-bwp-source="line2" data-bwp-legend-width="100"/>
       </div>
       <div id="api" class="bwp-container">
         <h3>Chart-API</h3>
-        <svg class="bwp-chart" data-bwp-type="linechart" data-bwp-source="http://127.0.0.1:8000/examples/test_data.json" data-bwp-recall="10"/>
+        <svg class="bwp-chart" data-bwp-type="linechart" data-bwp-source="api"/>
         <p>only works on webservers or url-requests</p>
       </div>
     </div>

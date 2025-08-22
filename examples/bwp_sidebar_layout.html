@@ -20,11 +20,16 @@
   </head>
   <script src="../js/bwp_core.js"></script>
   <script src="../js/bwp_layout.js" defer></script>
+  <script>
+    BwpDataSourceRegistry.register('menu', {
+      inline: {'Dropdown':{'Block 1':'#block1','Block 2':'#block2','Block 3':'#block3'},'Onepage Layout':'./bwp_onepage_layout.html','Sidebar Layout':'./bwp_sidebar_layout.html','Compact Layout':'./bwp_compact_layout.html'}
+    });
+  </script>
   <body>
     <div class="bwp-sidebar-layout-container">
       <div class="bwp-container bwp-header bwp-headline">
         <h2 id="title"><img src="../logos/bwp-logo.png"/>Example - Sidebar Layout</h2>
-        <div id="menu" class="bwp-navbar" data-bwp-menu-plain="{&quot;Dropdown&quot;:{&quot;Block 1&quot;:&quot;#block1&quot;, &quot;Block 2&quot;:&quot;#block2&quot;,&quot;Block 3&quot;:&quot;#block3&quot;},&quot;Google&quot;:&quot;https://www.google.com/&quot;}"></div>
+        <div id="menu" class="bwp-navbar" data-bwp-source="menu"></div>
       </div>
       <div class="bwp-container bwp-sidebar">
         <img src="../logos/bwp-logo.png" class="bwp-image-zoom"/>

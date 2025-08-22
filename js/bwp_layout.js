@@ -55,18 +55,14 @@ class BWP_SearchBar {
 class BWP_Menu {
 	constructor(navbar) {
 		this.navbar = navbar;
-		if ("bwpMenuSource" in navbar.dataset) {
-			universalFetchAsync({
-				url:navbar.dataset.bwpMenuSource,
-				responseType: 'json',
-				onSuccess: data => { this.updateView(data); },
-				onError: err => { this.updateView({}); }
-			});
-		} else if ("bwpMenuPlain" in navbar.dataset) {
-			this.updateView(JSON.parse(navbar.dataset.bwpMenuPlain));
-		} else {
-			console.error('Invalid menu input, "data-bwp-menu-source" or "data-bwp-menu-plain" is not defined');
-		}
+		const source = BwpDataSourceRegistry.get(navbar.dataset.bwpSource);
+		if (source) {
+			source.oneTimeSubscribe(
+				data => this.updateView(data),
+				err => this.updateView({}),
+			);
+		} else
+			console.error('no DataSource '+navbar.dataset.bwpSource+' is registered');
 	}
 	updateView(data) {
 		this.activeHref = '';
@@ -77,7 +73,7 @@ class BWP_Menu {
 			document.querySelector('#menu a[href="'+this.activeHref+'"]').classList.add('bwp-is-active');
 	}
 	makeMenuItem(label, href) {
-		if (!href.startsWith('#') && window.location.pathname.includes(href) && href.length > this.activeHref.length)
+		if (!href.startsWith('#') && ((href.startsWith('.') && window.location.pathname.includes(href.slice(2))) || window.location.pathname.includes(href)) && href.length > this.activeHref.length)
 			this.activeHref = href;
 		return createElement('a',[],{'href':href},label);
 	}
@@ -99,19 +95,16 @@ class BWP_SlideShow {
 		this.index = 0;
 		this.autoplay = ("bwpAutoplay" in root.dataset);
 		if ("bwpSource" in root.dataset) {
-			const lambda = () => universalFetchAsync({
-				url:root.dataset.bwpSource,
-				responseType: 'json',
-				onSuccess: data => { this.updateSlides(data); },
-				onError: err => { this.updateSlides([]); }
-			});
-			if ("bwpRecall" in root.dataset) {
-				setInterval(() => lambda(), parseInt(this.root.dataset.bwpRecall) * 60 * 1000);
-			}
-			lambda();
-		} else {
-			this.updateView()
-		}
+			const source = BwpDataSourceRegistry.get(root.dataset.bwpSource);
+			if (source) {
+				source.subscribe(
+					data => this.updateSlides(data),
+					err => this.updateSlides([]),
+				);
+			} else
+				console.error('no DataSource '+root.dataset.bwpSource+' is registered');
+		} else
+			this.updateView();
 	}
 	updateSlides(data) {
 		this.root.innerHTML = '';
@@ -184,7 +177,7 @@ class BWP_SlideShow {
 
 BwpWidgetRegistry.register('.bwp-popup', BWP_Popup, false);
 BwpWidgetRegistry.register('.bwp-search-bar', BWP_SearchBar, false);
-BwpWidgetRegistry.register('.bwp-navbar', BWP_Menu, false);
+BwpWidgetRegistry.register('.bwp-navbar[data-bwp-source]', BWP_Menu, false);
 BwpWidgetRegistry.register('.bwp-slideshow', BWP_SlideShow, true);
 
 function runLayoutApi() {

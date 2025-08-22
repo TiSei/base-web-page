@@ -79,3 +79,87 @@ const BwpWidgetRegistry = {
 document.addEventListener("DOMContentLoaded", () => {
 	BwpWidgetRegistry.run();
 });
+
+class BwpDataSource {
+	constructor({ url = null, recall = null, transform = null, responseType = 'json', ignoreNotModified = false, noCache = false, inline = null } = {}) {
+		this.url = url;
+		this.recall = recall;
+		this.transform = transform;
+		this.responseType = responseType;
+		this.ignoreNotModified = ignoreNotModified;
+		this.noCache = noCache;
+		this.inline = inline;
+		this._interval =  null;
+		this._listeners = new Map();
+		this._lastData = null;
+	}
+	applyTransform(data, el) {
+		if (typeof this.transform === "function")
+			return this.transform(data);
+		return data;
+	}
+	_fetch() {
+		if (this.url) {
+			universalFetchAsync({
+				url: this.url,
+				responseType: this.responseType,
+				ignoreNotModified: this.ignoreNotModified,
+				noCache: this.noCache,
+				onSuccess: data => this._notifyListeners(this.applyTransform(data)),
+				onError: err => {
+					for (const { onError } of this._listeners.values()) {
+						if (typeof onError === "function") onError(err);
+					}
+				}
+			});
+		} else
+			this._notifyListeners(this.applyTransform(this.inline));
+	}
+	_notifyListeners(data) {
+		this._lastData = data;
+		for (const callback of this._listeners.keys()) {
+			try {
+				callback(data);
+			} catch (e) {
+				console.error("Listener callback failed:", e);
+			}
+		}
+	}
+	subscribe(callback, onError = null) {
+		if (typeof callback !== "function") return;
+		this._listeners.set(callback, { onError });
+		if (this._lastData !== null) {
+			callback(this._lastData);
+			return;
+		}
+		if (!this._interval && this.url && this.recall)
+			this._interval = setInterval(() => this._fetch(), parseInt(this.recall) * 1000);
+		this._fetch();
+	}
+	unsubscribe(callback) {
+		this._listeners.delete(callback);
+		if (this._listeners.size === 0) {
+			if (this._interval) {
+				clearInterval(this._interval);
+				this._interval = null;
+			}
+		}
+	}
+	oneTimeSubscribe(callback, onError = null) {
+		if (typeof callback !== "function") return;
+		const wrapper = (data) => {
+			try {
+				callback(data);
+			} finally {
+				this.unsubscribe(wrapper);
+			}
+		};
+		this.subscribe(wrapper, onError);
+	}
+}
+
+const BwpDataSourceRegistry = {
+	sources: new Map(),
+	register(name, cfg) { this.sources.set(name, new BwpDataSource(cfg)); },
+	get(name) { return this.sources.get(name) || null; }
+};

@@ -31,6 +31,11 @@
   </head>
   <script src="../js/bwp_core.js"></script>
   <script src="../js/bwp_layout.js" defer></script>
+  <script>
+    BwpDataSourceRegistry.register('slideshow-test', {
+      inline: ['./bwp_onepage_layout.html','./bwp_sidebar_layout.html','./bwp_compact_layout.html'],
+    });
+  </script>
   <body>
     <div class="bwp-onepage-layout-container">
       <div id="title" class="bwp-container">
@@ -41,14 +46,9 @@
         <table>
           <tr><th>tag</th><th>description</th></tr>
           <tr><td>data-bwp-autoplay<p class="opt">optional</p></td><td>int value represents the seconds until the next slide is automatically displayed.</td></tr>
-          <tr><td>data-bwp-source<p class="opt">optional</p></td><td>API URL to request dynamic sideshow data<br/>If not set, the slides must be defined manually</td></tr>
+          <tr><td>data-bwp-source<p class="opt">optional</p></td><td>unique name of BwpDataSource to use<br/>If not set, the slides must be defined manually</td></tr>
           <tr><td>data-bwp-slide-type<p class="opt">optional</p></td><td>defines the HTML tags on which the crawled slides are generated<br/>supported:<ul><li>iframe (default)</li><li>img</li></td></tr>
-          <tr><td>data-bwp-recall<p class="opt">optional</p></td><td>int value represents the minutes until the data is updated by calling the API again<br/>only usable by data-bwp-source</td></tr>
         </table>
-        <p>Example:<br/>
-        &lt;div class="bwp-slideshow" data-bwp-autoplay="10" data-bwp-source="http://127.0.0.1:8000/examples/sideshow_data.json.example" data-bwp-recall="1" data-bwp-slide-type="img"&gt;<br/>
-        Creates a slideshow that retrieves a JSON-encoded list of image URLs from the API once per minute and displays them as images, alternating every 10 seconds.
-        </p>
       </div>
       <div id="block1" class="bwp-container">
         <h3>Slideshow with IMG</h3>
@@ -71,7 +71,10 @@
             <iframe src="./bwp_compact_layout.html"></iframe>
           </div>
         </div>
-        <p>For crawling data dynamic at runtime, see <a href="#attributes">Attributes</a></p>
+      </div>
+      <div id="block2" class="bwp-container">
+        <h3>Slideshow with IFrame and BwpDataSource</h3>
+        <div class="bwp-slideshow" data-bwp-autoplay="10" data-bwp-source="slideshow-test"></div>
       </div>
     </div>
   </body>

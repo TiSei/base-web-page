@@ -6,9 +6,7 @@ class BWP_ChartBase {
 		this.config = {
 			legend: this.chart.classList.contains('bwp-chart-has-legend'),
 			legendWidth: chart.dataset.bwpLegendWidth ? parseInt(chart.dataset.bwpLegendWidth) : 200,
-			data: chart.dataset.bwpData ? JSON.parse(chart.dataset.bwpData) : null,
 			source: chart.dataset.bwpSource,
-			recall: chart.dataset.bwpRecall ? parseInt(chart.dataset.bwpRecall) : NaN
 		};
 		this.extendConfig(chart);
 		this.processChart();
@@ -37,20 +35,12 @@ class BWP_ChartBase {
 	processChart() {
 		this.chart.innerHTML = '';
 		this.chart.removeAttribute('viewBox');
-		if (this.config.source) {
-			const lambda = () => universalFetchAsync({
-				url:this.config.source,
-				responseType: 'json',
-				onSuccess: data => { this.updateChart(data); },
-				onError: err => { this.handleError('API-Request failed'); }
-			});
-			if (this.config.recall)
-				setInterval(() => lambda(), parseInt(this.config.recall) * 1000);
-			lambda();
-		} else if (this.config.data)
-			this.updateChart(this.config.data);
-		else
-			this.handleError('no data set');
+		const source = BwpDataSourceRegistry.get(this.config.source);
+		if (source) {
+			this.call = data => this.updateChart(data);
+			source.subscribe(this.call, err => this.handleError("API-Request failed"));
+		} else
+			this.handleError('no DataSource '+this.config.source+' is registered');
 	}
 	handleError(msg) {
 		this.chart.appendChild(createElement(
@@ -234,6 +224,6 @@ class BWP_LineChart extends BWP_ScaledChartBase {
 	}
 }
 
-BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=piechart]', BWP_PieChart, false);
-BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=columnchart]', BWP_ColumnChart, false);
-BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=linechart]', BWP_LineChart, true);
+BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=piechart][data-bwp-source]', BWP_PieChart, false);
+BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=columnchart][data-bwp-source]', BWP_ColumnChart, false);
+BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=linechart][data-bwp-source]', BWP_LineChart, true);
