@@ -37,3 +37,45 @@ async function universalFetchAsync({url, responseType = 'text', onSuccess = () =
 		onError(err);
 	}
 }
+
+const BwpWidgetRegistry = {
+	widgetMap: {},
+
+	register(selector, Widget, forceInit = true) {
+		this.widgetMap[selector] = Widget;
+		if (forceInit)
+			this.initWidgets(document);
+	},
+
+	initWidgets(root = document) {
+		for (const [selector, Widget] of Object.entries(this.widgetMap)) {
+			root.querySelectorAll(selector).forEach(el => {
+				if (!el._bwpInstance)
+					el._bwpInstance = new Widget(el);;
+			});
+		}
+	},
+
+	watchDOM() {
+		if (this._observer) return;
+		this._observer = new MutationObserver(mutations => {
+			for (const mutation of mutations) {
+				for (const node of mutation.addedNodes) {
+					if (node instanceof HTMLElement) {
+						this.initWidgets(node);
+					}
+				}
+			}
+		});
+		this._observer.observe(document.body, { childList: true, subtree: true });
+	},
+
+	run() {
+		this.initWidgets(document);
+		this.watchDOM();
+	}
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+	BwpWidgetRegistry.run();
+});

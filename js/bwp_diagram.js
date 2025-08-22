@@ -234,38 +234,6 @@ class BWP_LineChart extends BWP_ScaledChartBase {
 	}
 }
 
-function L_watchDOMManipulations() {
-	const observer = new MutationObserver(mutations => {
-		for (const mutation of mutations) {
-			for (const node of mutation.addedNodes) {
-				if (!(node instanceof HTMLElement)) continue;
-				const widgetMap = {
-					'.bwp-chart[data-bwp-type=piechart]': BWP_PieChart,
-					'.bwp-chart[data-bwp-type=columnchart]': BWP_ColumnChart,
-					'.bwp-chart[data-bwp-type=linechart]': BWP_LineChart,
-				};
-				for (const [selector, Widget] of Object.entries(widgetMap)) {
-					const target = node.matches(selector) ? node : node.querySelector(selector);
-					if (target) {
-						new Widget(target);
-					}
-				}
-			}
-		}
-	});
-	observer.observe(document.body, { childList: true, subtree: true });
-}
-
-function runChartApi() {
-	document.querySelectorAll(".bwp-chart[data-bwp-type]").forEach(el => {
-		switch (el.dataset.bwpType) {
-			case "piechart": new BWP_PieChart(el); break;
-			case "columnchart": new BWP_ColumnChart(el); break;
-			case "linechart": new BWP_LineChart(el); break;
-			default: console.warn("Unknown chart type:", el.dataset.bwpType);
-		}
-	});
-	L_watchDOMManipulations();
-}
-
-runChartApi();
+BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=piechart]', BWP_PieChart, false);
+BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=columnchart]', BWP_ColumnChart, false);
+BwpWidgetRegistry.register('.bwp-chart[data-bwp-type=linechart]', BWP_LineChart, true);

@@ -182,28 +182,10 @@ class BWP_SlideShow {
 	}
 }
 
-function L_watchDOMManipulations() {
-	const observer = new MutationObserver(mutations => {
-		for (const mutation of mutations) {
-			for (const node of mutation.addedNodes) {
-				if (!(node instanceof HTMLElement)) continue;
-				const widgetMap = {
-					'.bwp-popup': BWP_Popup,
-					'.bwp-search-bar': BWP_SearchBar,
-					'.bwp-navbar': BWP_Menu,
-					'.bwp-slideshow': BWP_SlideShow,
-				};
-				for (const [selector, Widget] of Object.entries(widgetMap)) {
-					const target = node.matches(selector) ? node : node.querySelector(selector);
-					if (target) {
-						new Widget(target);
-					}
-				}
-			}
-		}
-	});
-	observer.observe(document.body, { childList: true, subtree: true });
-}
+BwpWidgetRegistry.register('.bwp-popup', BWP_Popup, false);
+BwpWidgetRegistry.register('.bwp-search-bar', BWP_SearchBar, false);
+BwpWidgetRegistry.register('.bwp-navbar', BWP_Menu, false);
+BwpWidgetRegistry.register('.bwp-slideshow', BWP_SlideShow, true);
 
 function runLayoutApi() {
 	let btn = createElement('button',['bwp-btn','bwp-none','bwp-top-jumper'],{},'&#9650;');
@@ -216,11 +198,6 @@ function runLayoutApi() {
 		btn.classList.toggle('bwp-none', !(document.body.scrollTop > 20 || document.documentElement.scrollTop > 20));
 	});
 	new BWP_ImageZoomPopup().attachDelegated();
-	document.querySelectorAll(".bwp-popup").forEach(el => new BWP_Popup(el));
-	document.querySelectorAll(".bwp-search-bar").forEach(el => new BWP_SearchBar(el));
-	document.querySelectorAll(".bwp-navbar").forEach(el => new BWP_Menu(el));
-	document.querySelectorAll(".bwp-slideshow").forEach(el => new BWP_SlideShow(el));
-	L_watchDOMManipulations();
 }
 
 runLayoutApi();

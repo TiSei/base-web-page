@@ -4,11 +4,11 @@
 small collection of useful javascripts and stylesheets to display simple layouts (dark mode support), dynamic menu, interactive views like sideshows and diagrams with API calls in the background
 
 **Installation**<br>
-To use all functions of the collection, the scripts must be integrate in HTML.<br>
-To use specific functions, for example only sideshow, at least bwp_general.js and bwp_layout.css must be integrate as well
+To use **all** functions of the collection, the scripts must be integrate in HTML.<br>
+To use **specific** functions, for example only slideshow, at least bwp_core.js and bwp_layout.css (function script) must be integrate as well
 
 > [!IMPORTANT]
-> every javascript, excepted bwp_general.js, must be integrate with the **defer**-attribute, to run correctly f.e.<br>
+> every javascript, excepted bwp_core.js, must be integrate with the **defer**-attribute, to run correctly f.e.<br>
 >```
 ><script src="../js/bwp_layout.js" defer></script>
 >```
@@ -63,6 +63,11 @@ An lightweight slideshow module for presenting diashows, documents and other web
 ## Diagrams
 
 An lightweight diagrams module for interactive presenting data at runtime is integrated and supports external queries by API call as well.
+
+supported types:
+- PieChart
+- ColumnChart
+- LineChart
 
 > [!TIP]
 > Useful by creating small dashboards
